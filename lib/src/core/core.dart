@@ -6,10 +6,10 @@ import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/billing_client_wrappers.dart';
 
-import '../crosspay.dart';
+import '../orca.dart';
 import '../models/models.dart';
 
-const endpoints = CrosspayEndpoints(
+const endpoints = OrcaEndpoints(
   identifyCustomer: "/identify",
   entitlements: "/entitlements",
   activeEntitlements: "/entitlements/active",
@@ -22,10 +22,10 @@ const endpoints = CrosspayEndpoints(
 );
 
 abstract class Store {
-  final CrosspayEnvironment environment;
+  final OrcaEnvironment environment;
   final Dio dio;
 
-  List<CrosspayEntitlement>? _entitlements;
+  List<OrcaEntitlement>? _entitlements;
   @protected
   final StreamController<PurchaseEvent> streamController;
 
@@ -37,25 +37,25 @@ abstract class Store {
 
   Future<List<SubscriptionStoreProduct>> queryProducts();
 
-  /// Initiates a purchase flow for the given [CrosspayEntitlement]
+  /// Initiates a purchase flow for the given [OrcaEntitlement]
   ///
   /// [entitlement] is the product the user wants to purchase. It should be one of the products returned by [queryProducts]
-  /// [customerEmail] is the email of the customer making the purchase. This is used to link the purchase to the customer in Crosspay
+  /// [customerEmail] is the email of the customer making the purchase. This is used to link the purchase to the customer in Orca
   /// [proratedProduct] is the product the customer is upgrading/downgrading from. This is required for Stripe and GoCardless purchases
   /// [prorationMode] indicates whether the purchase is an upgrade or downgrade. This is required for Stripe and GoCardless purchases
   /// [redirectUrl] is the URL the customer will be redirected to after a successful purchase. This is required for Stripe and GoCardless purchases
   /// [failureRedirectUrl] is the URL the customer will be redirected to after a failed purchase. This is required for Stripe and GoCardless purchases
   Future<void> purchase(
-    CrosspayEntitlement entitlement,
+    OrcaEntitlement entitlement,
     String customerEmail, {
-    CrosspayProduct? proratedProduct,
+    OrcaProduct? proratedProduct,
     ProrationMode? prorationMode,
     required String redirectUrl,
     required String failureRedirectUrl,
     ReplacementMode replacementMode = ReplacementMode.withTimeProration,
   });
 
-  Future<List<CrosspayEntitlement>> listEntitlements() async {
+  Future<List<OrcaEntitlement>> listEntitlements() async {
     if (_entitlements?.isNotEmpty == true) {
       return _entitlements!;
     }
@@ -72,17 +72,17 @@ abstract class Store {
     }
 
     _entitlements = ((res.data as Map)["data"] as List)
-        .map((e) => CrosspayEntitlement.fromJson(e))
+        .map((e) => OrcaEntitlement.fromJson(e))
         .toList();
 
     return _entitlements!;
   }
 
-  /// Get the active [CrosspayStorableEntitlement]
+  /// Get the active [OrcaStorableEntitlement]
   ///
   /// This gives the active entitlements stored in DB. This is usually not used
   /// that much but it has receipts and expiration details.
-  Future<List<CrosspayStorableEntitlement>> getActiveEntitlements(
+  Future<List<OrcaStorableEntitlement>> getActiveEntitlements(
     String customerEmail,
   ) async {
     try {
@@ -101,7 +101,7 @@ abstract class Store {
       }
 
       return (res.data?["data"] as List)
-          .map((d) => CrosspayStorableEntitlement.fromJson(d))
+          .map((d) => OrcaStorableEntitlement.fromJson(d))
           .toList();
     } on DioException catch (e) {
       if (e.response?.statusCode == 404) {
@@ -142,7 +142,7 @@ abstract class Store {
     return products;
   }
 
-  Future<List<CrosspayPlayStorePurchasesSyncProduct>> syncPlayStorePurchases(
+  Future<List<OrcaPlayStorePurchasesSyncProduct>> syncPlayStorePurchases(
     String customerEmail,
     List<PurchaseDetails> purchases,
   ) async {
@@ -175,7 +175,7 @@ abstract class Store {
     }
 
     return (res.data?["data"]["products"] as List)
-        .map((d) => CrosspayPlayStorePurchasesSyncProduct.fromJson(d))
+        .map((d) => OrcaPlayStorePurchasesSyncProduct.fromJson(d))
         .toList();
   }
 }

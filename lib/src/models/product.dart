@@ -1,6 +1,6 @@
 part of 'models.dart';
 
-enum CrosspayStore {
+enum OrcaStore {
   @JsonValue("appstore")
   appStore,
   @JsonValue("playstore")
@@ -26,7 +26,7 @@ sealed class SubscriptionStoreProduct with _$SubscriptionStoreProduct {
     required double price,
     required String formattedPrice,
     required String currencyCode,
-    required CrosspayStore store,
+    required OrcaStore store,
     required int? subscriptionRecurrenceDays,
     required String accessLevel,
     required EntitlementType productType,
@@ -75,8 +75,8 @@ Map<String, dynamic>? _fromJsonMetadata(dynamic json) {
 }
 
 @freezed
-sealed class CrosspayEntitlement with _$CrosspayEntitlement {
-  factory CrosspayEntitlement({
+sealed class OrcaEntitlement with _$OrcaEntitlement {
+  factory OrcaEntitlement({
     required String id,
     required String name,
     @JsonKey(
@@ -87,61 +87,61 @@ sealed class CrosspayEntitlement with _$CrosspayEntitlement {
     String? description,
     @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
     Map<String, dynamic>? metadata,
-    required CrosspayProducts products,
+    required OrcaProducts products,
     @JsonKey(name: "entitlement_type") required EntitlementType entitlementType,
-  }) = _CrosspayEntitlement;
+  }) = _OrcaEntitlement;
 
-  factory CrosspayEntitlement.fromJson(Map<String, dynamic> json) =>
-      _$CrosspayEntitlementFromJson(json);
+  factory OrcaEntitlement.fromJson(Map<String, dynamic> json) =>
+      _$OrcaEntitlementFromJson(json);
 }
 
 @freezed
-sealed class CrosspayProducts with _$CrosspayProducts {
-  CrosspayProducts._();
+sealed class OrcaProducts with _$OrcaProducts {
+  OrcaProducts._();
 
-  factory CrosspayProducts({
-    @JsonKey(name: "playstore") CrosspayProduct? playStore,
-    @JsonKey(name: "appstore") CrosspayProduct? appStore,
-    CrosspayProduct? stripe,
-    CrosspayProduct? gocardless,
-  }) = _CrosspayProducts;
+  factory OrcaProducts({
+    @JsonKey(name: "playstore") OrcaProduct? playStore,
+    @JsonKey(name: "appstore") OrcaProduct? appStore,
+    OrcaProduct? stripe,
+    OrcaProduct? gocardless,
+  }) = _OrcaProducts;
 
-  factory CrosspayProducts.fromJson(Map<String, dynamic> json) =>
-      _$CrosspayProductsFromJson(json);
+  factory OrcaProducts.fromJson(Map<String, dynamic> json) =>
+      _$OrcaProductsFromJson(json);
 
-  CrosspayProduct? operator [](CrosspayStore store) {
+  OrcaProduct? operator [](OrcaStore store) {
     switch (store) {
-      case CrosspayStore.appStore:
+      case OrcaStore.appStore:
         return appStore;
-      case CrosspayStore.playStore:
+      case OrcaStore.playStore:
         return playStore;
-      case CrosspayStore.stripe || CrosspayStore.stripeSandbox:
+      case OrcaStore.stripe || OrcaStore.stripeSandbox:
         return stripe;
-      case CrosspayStore.gocardless || CrosspayStore.gocardlessSandbox:
+      case OrcaStore.gocardless || OrcaStore.gocardlessSandbox:
         return gocardless;
     }
   }
 }
 
 @freezed
-sealed class CrosspayProduct with _$CrosspayProduct {
-  factory CrosspayProduct({
+sealed class OrcaProduct with _$OrcaProduct {
+  factory OrcaProduct({
     required String id,
     @JsonKey(name: "product_id") required String productId,
     required String name,
     String? description,
     @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
     Map<String, dynamic>? metadata,
-  }) = _CrosspayProduct;
+  }) = _OrcaProduct;
 
-  factory CrosspayProduct.fromJson(Map<String, dynamic> json) =>
-      _$CrosspayProductFromJson(json);
+  factory OrcaProduct.fromJson(Map<String, dynamic> json) =>
+      _$OrcaProductFromJson(json);
 }
 
 @freezed
-sealed class CrosspayPlayStorePurchasesSyncProduct
-    with _$CrosspayPlayStorePurchasesSyncProduct {
-  factory CrosspayPlayStorePurchasesSyncProduct({
+sealed class OrcaPlayStorePurchasesSyncProduct
+    with _$OrcaPlayStorePurchasesSyncProduct {
+  factory OrcaPlayStorePurchasesSyncProduct({
     required String id,
     @JsonKey(name: "product_id") required String productId,
     @JsonKey(name: "entitlement_id") required String entitlementId,
@@ -150,16 +150,16 @@ sealed class CrosspayPlayStorePurchasesSyncProduct
     @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
     Map<String, dynamic>? metadata,
     required String receipt,
-  }) = _CrosspayPlayStorePurchasesSyncProduct;
+  }) = _OrcaPlayStorePurchasesSyncProduct;
 
-  factory CrosspayPlayStorePurchasesSyncProduct.fromJson(
+  factory OrcaPlayStorePurchasesSyncProduct.fromJson(
           Map<String, dynamic> json) =>
-      _$CrosspayPlayStorePurchasesSyncProductFromJson(json);
+      _$OrcaPlayStorePurchasesSyncProductFromJson(json);
 }
 
 @freezed
-sealed class CrosspayStorableEntitlement with _$CrosspayStorableEntitlement {
-  factory CrosspayStorableEntitlement({
+sealed class OrcaStorableEntitlement with _$OrcaStorableEntitlement {
+  factory OrcaStorableEntitlement({
     required String id,
     @JsonKey(name: "product_id") required String productId,
     @JsonKey(name: "entitlement_id") required String entitlementId,
@@ -173,20 +173,20 @@ sealed class CrosspayStorableEntitlement with _$CrosspayStorableEntitlement {
         fromJson: _dateTimeNullableFromEpoch,
         toJson: _dateTimeNullableToEpoch)
     DateTime? trialExpiresAt,
-    required CrosspayStore store,
+    required OrcaStore store,
     required EntitlementStatus status,
     @JsonKey(name: "renewal_status")
     required SubscriptionRenewalStatus? renewalStatus,
     @JsonKey(name: "entitlement_type") required EntitlementType entitlementType,
     @JsonKey(name: "purchase_state") String? purchaseState,
-  }) = _CrosspayStorableEntitlement;
+  }) = _OrcaStorableEntitlement;
 
-  factory CrosspayStorableEntitlement.fromJson(Map<String, dynamic> json) =>
-      _$CrosspayStorableEntitlementFromJson(json);
+  factory OrcaStorableEntitlement.fromJson(Map<String, dynamic> json) =>
+      _$OrcaStorableEntitlementFromJson(json);
 }
 
 ({String productId, String basePlanId}) unzipPlayStoreProductId(
-  CrosspayProduct product,
+  OrcaProduct product,
 ) {
   final parts = product.productId.split(':');
   if (parts.length == 2) {
@@ -196,7 +196,7 @@ sealed class CrosspayStorableEntitlement with _$CrosspayStorableEntitlement {
 }
 
 ({String productId, String basePlanId}) unzipPlayStoreEntitlementProductId(
-  CrosspayStorableEntitlement product,
+  OrcaStorableEntitlement product,
 ) {
   final parts = product.productId.split(':');
   if (parts.length == 2) {

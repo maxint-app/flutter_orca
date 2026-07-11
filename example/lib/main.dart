@@ -5,18 +5,18 @@ import 'package:collection/collection.dart';
 import 'package:example/env.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_crosspay/flutter_crosspay.dart';
+import 'package:flutter_orca/flutter_orca.dart';
 
-late final FlutterCrosspay crosspay;
+late final FlutterOrca orca;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  crosspay = FlutterCrosspay(
-    publicKey: Env.crosspayPublicKey,
+  orca = FlutterOrca(
+    publicKey: Env.orcaPublicKey,
     environment: !kIsWeb && Platform.isAndroid
-        ? CrosspayEnvironment.production
-        : CrosspayEnvironment.sandbox,
-    baseUrl: Env.crosspayApiUrl,
+        ? OrcaEnvironment.production
+        : OrcaEnvironment.sandbox,
+    baseUrl: Env.orcaApiUrl,
   );
   runApp(const MainApp());
 }
@@ -29,24 +29,24 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  List<CrosspayEntitlement> entitlements = [];
+  List<OrcaEntitlement> entitlements = [];
   List<SubscriptionStoreProduct> products = [];
-  List<CrosspayStorableEntitlement> activeEntitlements = [];
+  List<OrcaStorableEntitlement> activeEntitlements = [];
 
   StreamSubscription? _subscription;
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await crosspay.identify(Env.userEmail);
+      await orca.identify(Env.userEmail);
 
-      _subscription = crosspay.purchaseEvents.listen((event) {
+      _subscription = orca.purchaseEvents.listen((event) {
         debugPrint("Purchase Event: ${event.event}");
       });
 
-      final entitlements = await crosspay.listEntitlements();
-      final products = await crosspay.queryProducts(ExternalStore.stripe);
-      final activeEntitlements = await crosspay.getActiveEntitlements();
+      final entitlements = await orca.listEntitlements();
+      final products = await orca.queryProducts(ExternalStore.stripe);
+      final activeEntitlements = await orca.getActiveEntitlements();
 
       setState(() {
         this.entitlements = entitlements;
@@ -165,7 +165,7 @@ class _MainAppState extends State<MainApp> {
                             }
 
                             if (provider == ExternalStore.stripe) {
-                              await crosspay.purchase(
+                              await orca.purchase(
                                 entitlement,
                                 externalStore: ExternalStore.stripe,
                                 redirectUrl: "https://example.com/success",
@@ -179,7 +179,7 @@ class _MainAppState extends State<MainApp> {
                                     : null,
                               );
                             } else {
-                              await crosspay.purchase(
+                              await orca.purchase(
                                 entitlement,
                                 externalStore: ExternalStore.gocardless,
                                 redirectUrl: "https://example.com/success",
@@ -194,7 +194,7 @@ class _MainAppState extends State<MainApp> {
                               );
                             }
                           } else {
-                            await crosspay.purchase(
+                            await orca.purchase(
                               entitlement,
                               externalStore: ExternalStore.stripe,
                               redirectUrl: "https://example.com/success",

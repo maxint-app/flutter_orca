@@ -85,7 +85,7 @@ class InAppPurchaseSubscriptionStore extends Store {
   }
 
   Future<List<ProductDetails>> _queryPlatformProducts(
-    List<CrosspayEntitlement> entitlements,
+    List<OrcaEntitlement> entitlements,
   ) async {
     final productIds = entitlements
         .map((s) {
@@ -114,7 +114,7 @@ class InAppPurchaseSubscriptionStore extends Store {
 
     final platformProducts = await _queryPlatformProducts(entitlements);
 
-    final store = kIsAndroid ? CrosspayStore.playStore : CrosspayStore.appStore;
+    final store = kIsAndroid ? OrcaStore.playStore : OrcaStore.appStore;
     final storeProducts = <SubscriptionStoreProduct>[];
 
     for (final entitlement in entitlements) {
@@ -149,7 +149,7 @@ class InAppPurchaseSubscriptionStore extends Store {
           description: storeProduct.description,
           formattedPrice: basePlan.pricingPhases[0].formattedPrice,
           price: basePlan.pricingPhases[0].priceAmountMicros / 1_000_000,
-          store: CrosspayStore.playStore,
+          store: OrcaStore.playStore,
           subscriptionRecurrenceDays: entitlement.period?.inDays,
           productType: entitlement.entitlementType,
           entitlementId: entitlement.id,
@@ -187,9 +187,9 @@ class InAppPurchaseSubscriptionStore extends Store {
 
   @override
   Future<void> purchase(
-    CrosspayEntitlement entitlement,
+    OrcaEntitlement entitlement,
     String customerEmail, {
-    CrosspayProduct? proratedProduct,
+    OrcaProduct? proratedProduct,
     ProrationMode? prorationMode,
     required String redirectUrl,
     required String failureRedirectUrl,
@@ -214,7 +214,7 @@ class InAppPurchaseSubscriptionStore extends Store {
         );
 
         final store =
-            kIsAndroid ? CrosspayStore.playStore : CrosspayStore.appStore;
+            kIsAndroid ? OrcaStore.playStore : OrcaStore.appStore;
         final product = entitlement.products[store];
 
         /// Android product ids are productId:basePlanId for subscriptions
@@ -262,7 +262,7 @@ class InAppPurchaseSubscriptionStore extends Store {
             entitlement.entitlementType == EntitlementType.nonConsumable));
 
     if (isActive) {
-      throw CrosspayException.alreadyActive(
+      throw OrcaException.alreadyActive(
         "User is already ${entitlement.entitlementType == EntitlementType.subscription ? 'subscribed to' : 'purchased'} this entitlement '${entitlement.name}'. "
         "User can not be allowed to purchase the entitlement product again",
       );
