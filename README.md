@@ -1,3 +1,11 @@
+# ⚠️ DEPRECATION NOTICE
+
+> **This package (`flutter_crosspay`) has been retired and renamed to [`orca`](https://pub.dev/packages/orca).**
+> 
+> No further updates or bug fixes will be published to `flutter_crosspay`. Please migrate your project to use **`orca`** instead.
+
+---
+
 # flutter_crosspay
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
