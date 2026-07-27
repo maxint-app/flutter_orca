@@ -20,10 +20,11 @@ mixin _$SubscriptionStoreProduct {
   double get price;
   String get formattedPrice;
   String get currencyCode;
-  CrosspayStore get store;
+  OrcaStore get store;
   int? get subscriptionRecurrenceDays;
   String get accessLevel;
   EntitlementType get productType;
+  String get entitlementId;
 
   /// Create a copy of SubscriptionStoreProduct
   /// with the given fields replaced by the non-null parameter values.
@@ -58,7 +59,9 @@ mixin _$SubscriptionStoreProduct {
             (identical(other.accessLevel, accessLevel) ||
                 other.accessLevel == accessLevel) &&
             (identical(other.productType, productType) ||
-                other.productType == productType));
+                other.productType == productType) &&
+            (identical(other.entitlementId, entitlementId) ||
+                other.entitlementId == entitlementId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -74,11 +77,12 @@ mixin _$SubscriptionStoreProduct {
       store,
       subscriptionRecurrenceDays,
       accessLevel,
-      productType);
+      productType,
+      entitlementId);
 
   @override
   String toString() {
-    return 'SubscriptionStoreProduct(id: $id, name: $name, description: $description, price: $price, formattedPrice: $formattedPrice, currencyCode: $currencyCode, store: $store, subscriptionRecurrenceDays: $subscriptionRecurrenceDays, accessLevel: $accessLevel, productType: $productType)';
+    return 'SubscriptionStoreProduct(id: $id, name: $name, description: $description, price: $price, formattedPrice: $formattedPrice, currencyCode: $currencyCode, store: $store, subscriptionRecurrenceDays: $subscriptionRecurrenceDays, accessLevel: $accessLevel, productType: $productType, entitlementId: $entitlementId)';
   }
 }
 
@@ -95,10 +99,11 @@ abstract mixin class $SubscriptionStoreProductCopyWith<$Res> {
       double price,
       String formattedPrice,
       String currencyCode,
-      CrosspayStore store,
+      OrcaStore store,
       int? subscriptionRecurrenceDays,
       String accessLevel,
-      EntitlementType productType});
+      EntitlementType productType,
+      String entitlementId});
 }
 
 /// @nodoc
@@ -124,6 +129,7 @@ class _$SubscriptionStoreProductCopyWithImpl<$Res>
     Object? subscriptionRecurrenceDays = freezed,
     Object? accessLevel = null,
     Object? productType = null,
+    Object? entitlementId = null,
   }) {
     return _then(_self.copyWith(
       id: null == id
@@ -153,7 +159,7 @@ class _$SubscriptionStoreProductCopyWithImpl<$Res>
       store: null == store
           ? _self.store
           : store // ignore: cast_nullable_to_non_nullable
-              as CrosspayStore,
+              as OrcaStore,
       subscriptionRecurrenceDays: freezed == subscriptionRecurrenceDays
           ? _self.subscriptionRecurrenceDays
           : subscriptionRecurrenceDays // ignore: cast_nullable_to_non_nullable
@@ -166,6 +172,10 @@ class _$SubscriptionStoreProductCopyWithImpl<$Res>
           ? _self.productType
           : productType // ignore: cast_nullable_to_non_nullable
               as EntitlementType,
+      entitlementId: null == entitlementId
+          ? _self.entitlementId
+          : entitlementId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -268,10 +278,11 @@ extension SubscriptionStoreProductPatterns on SubscriptionStoreProduct {
             double price,
             String formattedPrice,
             String currencyCode,
-            CrosspayStore store,
+            OrcaStore store,
             int? subscriptionRecurrenceDays,
             String accessLevel,
-            EntitlementType productType)?
+            EntitlementType productType,
+            String entitlementId)?
         $default, {
     required TResult orElse(),
   }) {
@@ -288,7 +299,8 @@ extension SubscriptionStoreProductPatterns on SubscriptionStoreProduct {
             _that.store,
             _that.subscriptionRecurrenceDays,
             _that.accessLevel,
-            _that.productType);
+            _that.productType,
+            _that.entitlementId);
       case _:
         return orElse();
     }
@@ -316,10 +328,11 @@ extension SubscriptionStoreProductPatterns on SubscriptionStoreProduct {
             double price,
             String formattedPrice,
             String currencyCode,
-            CrosspayStore store,
+            OrcaStore store,
             int? subscriptionRecurrenceDays,
             String accessLevel,
-            EntitlementType productType)
+            EntitlementType productType,
+            String entitlementId)
         $default,
   ) {
     final _that = this;
@@ -335,7 +348,8 @@ extension SubscriptionStoreProductPatterns on SubscriptionStoreProduct {
             _that.store,
             _that.subscriptionRecurrenceDays,
             _that.accessLevel,
-            _that.productType);
+            _that.productType,
+            _that.entitlementId);
     }
   }
 
@@ -360,10 +374,11 @@ extension SubscriptionStoreProductPatterns on SubscriptionStoreProduct {
             double price,
             String formattedPrice,
             String currencyCode,
-            CrosspayStore store,
+            OrcaStore store,
             int? subscriptionRecurrenceDays,
             String accessLevel,
-            EntitlementType productType)?
+            EntitlementType productType,
+            String entitlementId)?
         $default,
   ) {
     final _that = this;
@@ -379,7 +394,8 @@ extension SubscriptionStoreProductPatterns on SubscriptionStoreProduct {
             _that.store,
             _that.subscriptionRecurrenceDays,
             _that.accessLevel,
-            _that.productType);
+            _that.productType,
+            _that.entitlementId);
       case _:
         return null;
     }
@@ -399,7 +415,8 @@ class _SubscriptionStoreProduct implements SubscriptionStoreProduct {
       required this.store,
       required this.subscriptionRecurrenceDays,
       required this.accessLevel,
-      required this.productType});
+      required this.productType,
+      required this.entitlementId});
   factory _SubscriptionStoreProduct.fromJson(Map<String, dynamic> json) =>
       _$SubscriptionStoreProductFromJson(json);
 
@@ -416,13 +433,15 @@ class _SubscriptionStoreProduct implements SubscriptionStoreProduct {
   @override
   final String currencyCode;
   @override
-  final CrosspayStore store;
+  final OrcaStore store;
   @override
   final int? subscriptionRecurrenceDays;
   @override
   final String accessLevel;
   @override
   final EntitlementType productType;
+  @override
+  final String entitlementId;
 
   /// Create a copy of SubscriptionStoreProduct
   /// with the given fields replaced by the non-null parameter values.
@@ -462,7 +481,9 @@ class _SubscriptionStoreProduct implements SubscriptionStoreProduct {
             (identical(other.accessLevel, accessLevel) ||
                 other.accessLevel == accessLevel) &&
             (identical(other.productType, productType) ||
-                other.productType == productType));
+                other.productType == productType) &&
+            (identical(other.entitlementId, entitlementId) ||
+                other.entitlementId == entitlementId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -478,11 +499,12 @@ class _SubscriptionStoreProduct implements SubscriptionStoreProduct {
       store,
       subscriptionRecurrenceDays,
       accessLevel,
-      productType);
+      productType,
+      entitlementId);
 
   @override
   String toString() {
-    return 'SubscriptionStoreProduct(id: $id, name: $name, description: $description, price: $price, formattedPrice: $formattedPrice, currencyCode: $currencyCode, store: $store, subscriptionRecurrenceDays: $subscriptionRecurrenceDays, accessLevel: $accessLevel, productType: $productType)';
+    return 'SubscriptionStoreProduct(id: $id, name: $name, description: $description, price: $price, formattedPrice: $formattedPrice, currencyCode: $currencyCode, store: $store, subscriptionRecurrenceDays: $subscriptionRecurrenceDays, accessLevel: $accessLevel, productType: $productType, entitlementId: $entitlementId)';
   }
 }
 
@@ -501,10 +523,11 @@ abstract mixin class _$SubscriptionStoreProductCopyWith<$Res>
       double price,
       String formattedPrice,
       String currencyCode,
-      CrosspayStore store,
+      OrcaStore store,
       int? subscriptionRecurrenceDays,
       String accessLevel,
-      EntitlementType productType});
+      EntitlementType productType,
+      String entitlementId});
 }
 
 /// @nodoc
@@ -530,6 +553,7 @@ class __$SubscriptionStoreProductCopyWithImpl<$Res>
     Object? subscriptionRecurrenceDays = freezed,
     Object? accessLevel = null,
     Object? productType = null,
+    Object? entitlementId = null,
   }) {
     return _then(_SubscriptionStoreProduct(
       id: null == id
@@ -559,7 +583,7 @@ class __$SubscriptionStoreProductCopyWithImpl<$Res>
       store: null == store
           ? _self.store
           : store // ignore: cast_nullable_to_non_nullable
-              as CrosspayStore,
+              as OrcaStore,
       subscriptionRecurrenceDays: freezed == subscriptionRecurrenceDays
           ? _self.subscriptionRecurrenceDays
           : subscriptionRecurrenceDays // ignore: cast_nullable_to_non_nullable
@@ -572,12 +596,16 @@ class __$SubscriptionStoreProductCopyWithImpl<$Res>
           ? _self.productType
           : productType // ignore: cast_nullable_to_non_nullable
               as EntitlementType,
+      entitlementId: null == entitlementId
+          ? _self.entitlementId
+          : entitlementId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
-mixin _$CrosspayEntitlement {
+mixin _$OrcaEntitlement {
   String get id;
   String get name;
   @JsonKey(
@@ -586,27 +614,28 @@ mixin _$CrosspayEntitlement {
       toJson: _durationToMillis)
   Duration? get period;
   String? get description;
+  @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
   Map<String, dynamic>? get metadata;
-  CrosspayProducts get products;
+  OrcaProducts get products;
   @JsonKey(name: "entitlement_type")
   EntitlementType get entitlementType;
 
-  /// Create a copy of CrosspayEntitlement
+  /// Create a copy of OrcaEntitlement
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $CrosspayEntitlementCopyWith<CrosspayEntitlement> get copyWith =>
-      _$CrosspayEntitlementCopyWithImpl<CrosspayEntitlement>(
-          this as CrosspayEntitlement, _$identity);
+  $OrcaEntitlementCopyWith<OrcaEntitlement> get copyWith =>
+      _$OrcaEntitlementCopyWithImpl<OrcaEntitlement>(
+          this as OrcaEntitlement, _$identity);
 
-  /// Serializes this CrosspayEntitlement to a JSON map.
+  /// Serializes this OrcaEntitlement to a JSON map.
   Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is CrosspayEntitlement &&
+            other is OrcaEntitlement &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.period, period) || other.period == period) &&
@@ -626,15 +655,15 @@ mixin _$CrosspayEntitlement {
 
   @override
   String toString() {
-    return 'CrosspayEntitlement(id: $id, name: $name, period: $period, description: $description, metadata: $metadata, products: $products, entitlementType: $entitlementType)';
+    return 'OrcaEntitlement(id: $id, name: $name, period: $period, description: $description, metadata: $metadata, products: $products, entitlementType: $entitlementType)';
   }
 }
 
 /// @nodoc
-abstract mixin class $CrosspayEntitlementCopyWith<$Res> {
-  factory $CrosspayEntitlementCopyWith(
-          CrosspayEntitlement value, $Res Function(CrosspayEntitlement) _then) =
-      _$CrosspayEntitlementCopyWithImpl;
+abstract mixin class $OrcaEntitlementCopyWith<$Res> {
+  factory $OrcaEntitlementCopyWith(
+          OrcaEntitlement value, $Res Function(OrcaEntitlement) _then) =
+      _$OrcaEntitlementCopyWithImpl;
   @useResult
   $Res call(
       {String id,
@@ -645,22 +674,23 @@ abstract mixin class $CrosspayEntitlementCopyWith<$Res> {
           toJson: _durationToMillis)
       Duration? period,
       String? description,
+      @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
       Map<String, dynamic>? metadata,
-      CrosspayProducts products,
+      OrcaProducts products,
       @JsonKey(name: "entitlement_type") EntitlementType entitlementType});
 
-  $CrosspayProductsCopyWith<$Res> get products;
+  $OrcaProductsCopyWith<$Res> get products;
 }
 
 /// @nodoc
-class _$CrosspayEntitlementCopyWithImpl<$Res>
-    implements $CrosspayEntitlementCopyWith<$Res> {
-  _$CrosspayEntitlementCopyWithImpl(this._self, this._then);
+class _$OrcaEntitlementCopyWithImpl<$Res>
+    implements $OrcaEntitlementCopyWith<$Res> {
+  _$OrcaEntitlementCopyWithImpl(this._self, this._then);
 
-  final CrosspayEntitlement _self;
-  final $Res Function(CrosspayEntitlement) _then;
+  final OrcaEntitlement _self;
+  final $Res Function(OrcaEntitlement) _then;
 
-  /// Create a copy of CrosspayEntitlement
+  /// Create a copy of OrcaEntitlement
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -697,7 +727,7 @@ class _$CrosspayEntitlementCopyWithImpl<$Res>
       products: null == products
           ? _self.products
           : products // ignore: cast_nullable_to_non_nullable
-              as CrosspayProducts,
+              as OrcaProducts,
       entitlementType: null == entitlementType
           ? _self.entitlementType
           : entitlementType // ignore: cast_nullable_to_non_nullable
@@ -705,19 +735,19 @@ class _$CrosspayEntitlementCopyWithImpl<$Res>
     ));
   }
 
-  /// Create a copy of CrosspayEntitlement
+  /// Create a copy of OrcaEntitlement
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CrosspayProductsCopyWith<$Res> get products {
-    return $CrosspayProductsCopyWith<$Res>(_self.products, (value) {
+  $OrcaProductsCopyWith<$Res> get products {
+    return $OrcaProductsCopyWith<$Res>(_self.products, (value) {
       return _then(_self.copyWith(products: value));
     });
   }
 }
 
-/// Adds pattern-matching-related methods to [CrosspayEntitlement].
-extension CrosspayEntitlementPatterns on CrosspayEntitlement {
+/// Adds pattern-matching-related methods to [OrcaEntitlement].
+extension OrcaEntitlementPatterns on OrcaEntitlement {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -732,12 +762,12 @@ extension CrosspayEntitlementPatterns on CrosspayEntitlement {
 
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>(
-    TResult Function(_CrosspayEntitlement value)? $default, {
+    TResult Function(_OrcaEntitlement value)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case _CrosspayEntitlement() when $default != null:
+      case _OrcaEntitlement() when $default != null:
         return $default(_that);
       case _:
         return orElse();
@@ -759,11 +789,11 @@ extension CrosspayEntitlementPatterns on CrosspayEntitlement {
 
   @optionalTypeArgs
   TResult map<TResult extends Object?>(
-    TResult Function(_CrosspayEntitlement value) $default,
+    TResult Function(_OrcaEntitlement value) $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _CrosspayEntitlement():
+      case _OrcaEntitlement():
         return $default(_that);
     }
   }
@@ -782,11 +812,11 @@ extension CrosspayEntitlementPatterns on CrosspayEntitlement {
 
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(_CrosspayEntitlement value)? $default,
+    TResult? Function(_OrcaEntitlement value)? $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _CrosspayEntitlement() when $default != null:
+      case _OrcaEntitlement() when $default != null:
         return $default(_that);
       case _:
         return null;
@@ -816,15 +846,16 @@ extension CrosspayEntitlementPatterns on CrosspayEntitlement {
                 toJson: _durationToMillis)
             Duration? period,
             String? description,
+            @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
             Map<String, dynamic>? metadata,
-            CrosspayProducts products,
+            OrcaProducts products,
             @JsonKey(name: "entitlement_type") EntitlementType entitlementType)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case _CrosspayEntitlement() when $default != null:
+      case _OrcaEntitlement() when $default != null:
         return $default(_that.id, _that.name, _that.period, _that.description,
             _that.metadata, _that.products, _that.entitlementType);
       case _:
@@ -856,14 +887,15 @@ extension CrosspayEntitlementPatterns on CrosspayEntitlement {
                 toJson: _durationToMillis)
             Duration? period,
             String? description,
+            @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
             Map<String, dynamic>? metadata,
-            CrosspayProducts products,
+            OrcaProducts products,
             @JsonKey(name: "entitlement_type") EntitlementType entitlementType)
         $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _CrosspayEntitlement():
+      case _OrcaEntitlement():
         return $default(_that.id, _that.name, _that.period, _that.description,
             _that.metadata, _that.products, _that.entitlementType);
     }
@@ -892,14 +924,15 @@ extension CrosspayEntitlementPatterns on CrosspayEntitlement {
                 toJson: _durationToMillis)
             Duration? period,
             String? description,
+            @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
             Map<String, dynamic>? metadata,
-            CrosspayProducts products,
+            OrcaProducts products,
             @JsonKey(name: "entitlement_type") EntitlementType entitlementType)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _CrosspayEntitlement() when $default != null:
+      case _OrcaEntitlement() when $default != null:
         return $default(_that.id, _that.name, _that.period, _that.description,
             _that.metadata, _that.products, _that.entitlementType);
       case _:
@@ -910,8 +943,8 @@ extension CrosspayEntitlementPatterns on CrosspayEntitlement {
 
 /// @nodoc
 @JsonSerializable()
-class _CrosspayEntitlement implements CrosspayEntitlement {
-  _CrosspayEntitlement(
+class _OrcaEntitlement implements OrcaEntitlement {
+  _OrcaEntitlement(
       {required this.id,
       required this.name,
       @JsonKey(
@@ -920,12 +953,13 @@ class _CrosspayEntitlement implements CrosspayEntitlement {
           toJson: _durationToMillis)
       required this.period,
       this.description,
+      @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
       final Map<String, dynamic>? metadata,
       required this.products,
       @JsonKey(name: "entitlement_type") required this.entitlementType})
       : _metadata = metadata;
-  factory _CrosspayEntitlement.fromJson(Map<String, dynamic> json) =>
-      _$CrosspayEntitlementFromJson(json);
+  factory _OrcaEntitlement.fromJson(Map<String, dynamic> json) =>
+      _$OrcaEntitlementFromJson(json);
 
   @override
   final String id;
@@ -941,6 +975,7 @@ class _CrosspayEntitlement implements CrosspayEntitlement {
   final String? description;
   final Map<String, dynamic>? _metadata;
   @override
+  @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
   Map<String, dynamic>? get metadata {
     final value = _metadata;
     if (value == null) return null;
@@ -950,23 +985,23 @@ class _CrosspayEntitlement implements CrosspayEntitlement {
   }
 
   @override
-  final CrosspayProducts products;
+  final OrcaProducts products;
   @override
   @JsonKey(name: "entitlement_type")
   final EntitlementType entitlementType;
 
-  /// Create a copy of CrosspayEntitlement
+  /// Create a copy of OrcaEntitlement
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$CrosspayEntitlementCopyWith<_CrosspayEntitlement> get copyWith =>
-      __$CrosspayEntitlementCopyWithImpl<_CrosspayEntitlement>(
+  _$OrcaEntitlementCopyWith<_OrcaEntitlement> get copyWith =>
+      __$OrcaEntitlementCopyWithImpl<_OrcaEntitlement>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$CrosspayEntitlementToJson(
+    return _$OrcaEntitlementToJson(
       this,
     );
   }
@@ -975,7 +1010,7 @@ class _CrosspayEntitlement implements CrosspayEntitlement {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _CrosspayEntitlement &&
+            other is _OrcaEntitlement &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.period, period) || other.period == period) &&
@@ -1002,16 +1037,16 @@ class _CrosspayEntitlement implements CrosspayEntitlement {
 
   @override
   String toString() {
-    return 'CrosspayEntitlement(id: $id, name: $name, period: $period, description: $description, metadata: $metadata, products: $products, entitlementType: $entitlementType)';
+    return 'OrcaEntitlement(id: $id, name: $name, period: $period, description: $description, metadata: $metadata, products: $products, entitlementType: $entitlementType)';
   }
 }
 
 /// @nodoc
-abstract mixin class _$CrosspayEntitlementCopyWith<$Res>
-    implements $CrosspayEntitlementCopyWith<$Res> {
-  factory _$CrosspayEntitlementCopyWith(_CrosspayEntitlement value,
-          $Res Function(_CrosspayEntitlement) _then) =
-      __$CrosspayEntitlementCopyWithImpl;
+abstract mixin class _$OrcaEntitlementCopyWith<$Res>
+    implements $OrcaEntitlementCopyWith<$Res> {
+  factory _$OrcaEntitlementCopyWith(_OrcaEntitlement value,
+          $Res Function(_OrcaEntitlement) _then) =
+      __$OrcaEntitlementCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -1023,23 +1058,24 @@ abstract mixin class _$CrosspayEntitlementCopyWith<$Res>
           toJson: _durationToMillis)
       Duration? period,
       String? description,
+      @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
       Map<String, dynamic>? metadata,
-      CrosspayProducts products,
+      OrcaProducts products,
       @JsonKey(name: "entitlement_type") EntitlementType entitlementType});
 
   @override
-  $CrosspayProductsCopyWith<$Res> get products;
+  $OrcaProductsCopyWith<$Res> get products;
 }
 
 /// @nodoc
-class __$CrosspayEntitlementCopyWithImpl<$Res>
-    implements _$CrosspayEntitlementCopyWith<$Res> {
-  __$CrosspayEntitlementCopyWithImpl(this._self, this._then);
+class __$OrcaEntitlementCopyWithImpl<$Res>
+    implements _$OrcaEntitlementCopyWith<$Res> {
+  __$OrcaEntitlementCopyWithImpl(this._self, this._then);
 
-  final _CrosspayEntitlement _self;
-  final $Res Function(_CrosspayEntitlement) _then;
+  final _OrcaEntitlement _self;
+  final $Res Function(_OrcaEntitlement) _then;
 
-  /// Create a copy of CrosspayEntitlement
+  /// Create a copy of OrcaEntitlement
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -1052,7 +1088,7 @@ class __$CrosspayEntitlementCopyWithImpl<$Res>
     Object? products = null,
     Object? entitlementType = null,
   }) {
-    return _then(_CrosspayEntitlement(
+    return _then(_OrcaEntitlement(
       id: null == id
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -1076,7 +1112,7 @@ class __$CrosspayEntitlementCopyWithImpl<$Res>
       products: null == products
           ? _self.products
           : products // ignore: cast_nullable_to_non_nullable
-              as CrosspayProducts,
+              as OrcaProducts,
       entitlementType: null == entitlementType
           ? _self.entitlementType
           : entitlementType // ignore: cast_nullable_to_non_nullable
@@ -1084,42 +1120,42 @@ class __$CrosspayEntitlementCopyWithImpl<$Res>
     ));
   }
 
-  /// Create a copy of CrosspayEntitlement
+  /// Create a copy of OrcaEntitlement
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CrosspayProductsCopyWith<$Res> get products {
-    return $CrosspayProductsCopyWith<$Res>(_self.products, (value) {
+  $OrcaProductsCopyWith<$Res> get products {
+    return $OrcaProductsCopyWith<$Res>(_self.products, (value) {
       return _then(_self.copyWith(products: value));
     });
   }
 }
 
 /// @nodoc
-mixin _$CrosspayProducts {
+mixin _$OrcaProducts {
   @JsonKey(name: "playstore")
-  CrosspayProduct? get playStore;
+  OrcaProduct? get playStore;
   @JsonKey(name: "appstore")
-  CrosspayProduct? get appStore;
-  CrosspayProduct? get stripe;
-  CrosspayProduct? get gocardless;
+  OrcaProduct? get appStore;
+  OrcaProduct? get stripe;
+  OrcaProduct? get gocardless;
 
-  /// Create a copy of CrosspayProducts
+  /// Create a copy of OrcaProducts
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $CrosspayProductsCopyWith<CrosspayProducts> get copyWith =>
-      _$CrosspayProductsCopyWithImpl<CrosspayProducts>(
-          this as CrosspayProducts, _$identity);
+  $OrcaProductsCopyWith<OrcaProducts> get copyWith =>
+      _$OrcaProductsCopyWithImpl<OrcaProducts>(
+          this as OrcaProducts, _$identity);
 
-  /// Serializes this CrosspayProducts to a JSON map.
+  /// Serializes this OrcaProducts to a JSON map.
   Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is CrosspayProducts &&
+            other is OrcaProducts &&
             (identical(other.playStore, playStore) ||
                 other.playStore == playStore) &&
             (identical(other.appStore, appStore) ||
@@ -1136,37 +1172,37 @@ mixin _$CrosspayProducts {
 
   @override
   String toString() {
-    return 'CrosspayProducts(playStore: $playStore, appStore: $appStore, stripe: $stripe, gocardless: $gocardless)';
+    return 'OrcaProducts(playStore: $playStore, appStore: $appStore, stripe: $stripe, gocardless: $gocardless)';
   }
 }
 
 /// @nodoc
-abstract mixin class $CrosspayProductsCopyWith<$Res> {
-  factory $CrosspayProductsCopyWith(
-          CrosspayProducts value, $Res Function(CrosspayProducts) _then) =
-      _$CrosspayProductsCopyWithImpl;
+abstract mixin class $OrcaProductsCopyWith<$Res> {
+  factory $OrcaProductsCopyWith(
+          OrcaProducts value, $Res Function(OrcaProducts) _then) =
+      _$OrcaProductsCopyWithImpl;
   @useResult
   $Res call(
-      {@JsonKey(name: "playstore") CrosspayProduct? playStore,
-      @JsonKey(name: "appstore") CrosspayProduct? appStore,
-      CrosspayProduct? stripe,
-      CrosspayProduct? gocardless});
+      {@JsonKey(name: "playstore") OrcaProduct? playStore,
+      @JsonKey(name: "appstore") OrcaProduct? appStore,
+      OrcaProduct? stripe,
+      OrcaProduct? gocardless});
 
-  $CrosspayProductCopyWith<$Res>? get playStore;
-  $CrosspayProductCopyWith<$Res>? get appStore;
-  $CrosspayProductCopyWith<$Res>? get stripe;
-  $CrosspayProductCopyWith<$Res>? get gocardless;
+  $OrcaProductCopyWith<$Res>? get playStore;
+  $OrcaProductCopyWith<$Res>? get appStore;
+  $OrcaProductCopyWith<$Res>? get stripe;
+  $OrcaProductCopyWith<$Res>? get gocardless;
 }
 
 /// @nodoc
-class _$CrosspayProductsCopyWithImpl<$Res>
-    implements $CrosspayProductsCopyWith<$Res> {
-  _$CrosspayProductsCopyWithImpl(this._self, this._then);
+class _$OrcaProductsCopyWithImpl<$Res>
+    implements $OrcaProductsCopyWith<$Res> {
+  _$OrcaProductsCopyWithImpl(this._self, this._then);
 
-  final CrosspayProducts _self;
-  final $Res Function(CrosspayProducts) _then;
+  final OrcaProducts _self;
+  final $Res Function(OrcaProducts) _then;
 
-  /// Create a copy of CrosspayProducts
+  /// Create a copy of OrcaProducts
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -1180,81 +1216,81 @@ class _$CrosspayProductsCopyWithImpl<$Res>
       playStore: freezed == playStore
           ? _self.playStore
           : playStore // ignore: cast_nullable_to_non_nullable
-              as CrosspayProduct?,
+              as OrcaProduct?,
       appStore: freezed == appStore
           ? _self.appStore
           : appStore // ignore: cast_nullable_to_non_nullable
-              as CrosspayProduct?,
+              as OrcaProduct?,
       stripe: freezed == stripe
           ? _self.stripe
           : stripe // ignore: cast_nullable_to_non_nullable
-              as CrosspayProduct?,
+              as OrcaProduct?,
       gocardless: freezed == gocardless
           ? _self.gocardless
           : gocardless // ignore: cast_nullable_to_non_nullable
-              as CrosspayProduct?,
+              as OrcaProduct?,
     ));
   }
 
-  /// Create a copy of CrosspayProducts
+  /// Create a copy of OrcaProducts
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CrosspayProductCopyWith<$Res>? get playStore {
+  $OrcaProductCopyWith<$Res>? get playStore {
     if (_self.playStore == null) {
       return null;
     }
 
-    return $CrosspayProductCopyWith<$Res>(_self.playStore!, (value) {
+    return $OrcaProductCopyWith<$Res>(_self.playStore!, (value) {
       return _then(_self.copyWith(playStore: value));
     });
   }
 
-  /// Create a copy of CrosspayProducts
+  /// Create a copy of OrcaProducts
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CrosspayProductCopyWith<$Res>? get appStore {
+  $OrcaProductCopyWith<$Res>? get appStore {
     if (_self.appStore == null) {
       return null;
     }
 
-    return $CrosspayProductCopyWith<$Res>(_self.appStore!, (value) {
+    return $OrcaProductCopyWith<$Res>(_self.appStore!, (value) {
       return _then(_self.copyWith(appStore: value));
     });
   }
 
-  /// Create a copy of CrosspayProducts
+  /// Create a copy of OrcaProducts
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CrosspayProductCopyWith<$Res>? get stripe {
+  $OrcaProductCopyWith<$Res>? get stripe {
     if (_self.stripe == null) {
       return null;
     }
 
-    return $CrosspayProductCopyWith<$Res>(_self.stripe!, (value) {
+    return $OrcaProductCopyWith<$Res>(_self.stripe!, (value) {
       return _then(_self.copyWith(stripe: value));
     });
   }
 
-  /// Create a copy of CrosspayProducts
+  /// Create a copy of OrcaProducts
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CrosspayProductCopyWith<$Res>? get gocardless {
+  $OrcaProductCopyWith<$Res>? get gocardless {
     if (_self.gocardless == null) {
       return null;
     }
 
-    return $CrosspayProductCopyWith<$Res>(_self.gocardless!, (value) {
+    return $OrcaProductCopyWith<$Res>(_self.gocardless!, (value) {
       return _then(_self.copyWith(gocardless: value));
     });
   }
 }
 
-/// Adds pattern-matching-related methods to [CrosspayProducts].
-extension CrosspayProductsPatterns on CrosspayProducts {
+/// Adds pattern-matching-related methods to [OrcaProducts].
+extension OrcaProductsPatterns on OrcaProducts {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -1269,12 +1305,12 @@ extension CrosspayProductsPatterns on CrosspayProducts {
 
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>(
-    TResult Function(_CrosspayProducts value)? $default, {
+    TResult Function(_OrcaProducts value)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case _CrosspayProducts() when $default != null:
+      case _OrcaProducts() when $default != null:
         return $default(_that);
       case _:
         return orElse();
@@ -1296,11 +1332,11 @@ extension CrosspayProductsPatterns on CrosspayProducts {
 
   @optionalTypeArgs
   TResult map<TResult extends Object?>(
-    TResult Function(_CrosspayProducts value) $default,
+    TResult Function(_OrcaProducts value) $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _CrosspayProducts():
+      case _OrcaProducts():
         return $default(_that);
     }
   }
@@ -1319,11 +1355,11 @@ extension CrosspayProductsPatterns on CrosspayProducts {
 
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(_CrosspayProducts value)? $default,
+    TResult? Function(_OrcaProducts value)? $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _CrosspayProducts() when $default != null:
+      case _OrcaProducts() when $default != null:
         return $default(_that);
       case _:
         return null;
@@ -1345,16 +1381,16 @@ extension CrosspayProductsPatterns on CrosspayProducts {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
-            @JsonKey(name: "playstore") CrosspayProduct? playStore,
-            @JsonKey(name: "appstore") CrosspayProduct? appStore,
-            CrosspayProduct? stripe,
-            CrosspayProduct? gocardless)?
+            @JsonKey(name: "playstore") OrcaProduct? playStore,
+            @JsonKey(name: "appstore") OrcaProduct? appStore,
+            OrcaProduct? stripe,
+            OrcaProduct? gocardless)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case _CrosspayProducts() when $default != null:
+      case _OrcaProducts() when $default != null:
         return $default(
             _that.playStore, _that.appStore, _that.stripe, _that.gocardless);
       case _:
@@ -1378,15 +1414,15 @@ extension CrosspayProductsPatterns on CrosspayProducts {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
-            @JsonKey(name: "playstore") CrosspayProduct? playStore,
-            @JsonKey(name: "appstore") CrosspayProduct? appStore,
-            CrosspayProduct? stripe,
-            CrosspayProduct? gocardless)
+            @JsonKey(name: "playstore") OrcaProduct? playStore,
+            @JsonKey(name: "appstore") OrcaProduct? appStore,
+            OrcaProduct? stripe,
+            OrcaProduct? gocardless)
         $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _CrosspayProducts():
+      case _OrcaProducts():
         return $default(
             _that.playStore, _that.appStore, _that.stripe, _that.gocardless);
     }
@@ -1407,15 +1443,15 @@ extension CrosspayProductsPatterns on CrosspayProducts {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
-            @JsonKey(name: "playstore") CrosspayProduct? playStore,
-            @JsonKey(name: "appstore") CrosspayProduct? appStore,
-            CrosspayProduct? stripe,
-            CrosspayProduct? gocardless)?
+            @JsonKey(name: "playstore") OrcaProduct? playStore,
+            @JsonKey(name: "appstore") OrcaProduct? appStore,
+            OrcaProduct? stripe,
+            OrcaProduct? gocardless)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _CrosspayProducts() when $default != null:
+      case _OrcaProducts() when $default != null:
         return $default(
             _that.playStore, _that.appStore, _that.stripe, _that.gocardless);
       case _:
@@ -1426,38 +1462,38 @@ extension CrosspayProductsPatterns on CrosspayProducts {
 
 /// @nodoc
 @JsonSerializable()
-class _CrosspayProducts extends CrosspayProducts {
-  _CrosspayProducts(
+class _OrcaProducts extends OrcaProducts {
+  _OrcaProducts(
       {@JsonKey(name: "playstore") this.playStore,
       @JsonKey(name: "appstore") this.appStore,
       this.stripe,
       this.gocardless})
       : super._();
-  factory _CrosspayProducts.fromJson(Map<String, dynamic> json) =>
-      _$CrosspayProductsFromJson(json);
+  factory _OrcaProducts.fromJson(Map<String, dynamic> json) =>
+      _$OrcaProductsFromJson(json);
 
   @override
   @JsonKey(name: "playstore")
-  final CrosspayProduct? playStore;
+  final OrcaProduct? playStore;
   @override
   @JsonKey(name: "appstore")
-  final CrosspayProduct? appStore;
+  final OrcaProduct? appStore;
   @override
-  final CrosspayProduct? stripe;
+  final OrcaProduct? stripe;
   @override
-  final CrosspayProduct? gocardless;
+  final OrcaProduct? gocardless;
 
-  /// Create a copy of CrosspayProducts
+  /// Create a copy of OrcaProducts
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$CrosspayProductsCopyWith<_CrosspayProducts> get copyWith =>
-      __$CrosspayProductsCopyWithImpl<_CrosspayProducts>(this, _$identity);
+  _$OrcaProductsCopyWith<_OrcaProducts> get copyWith =>
+      __$OrcaProductsCopyWithImpl<_OrcaProducts>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$CrosspayProductsToJson(
+    return _$OrcaProductsToJson(
       this,
     );
   }
@@ -1466,7 +1502,7 @@ class _CrosspayProducts extends CrosspayProducts {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _CrosspayProducts &&
+            other is _OrcaProducts &&
             (identical(other.playStore, playStore) ||
                 other.playStore == playStore) &&
             (identical(other.appStore, appStore) ||
@@ -1483,43 +1519,43 @@ class _CrosspayProducts extends CrosspayProducts {
 
   @override
   String toString() {
-    return 'CrosspayProducts(playStore: $playStore, appStore: $appStore, stripe: $stripe, gocardless: $gocardless)';
+    return 'OrcaProducts(playStore: $playStore, appStore: $appStore, stripe: $stripe, gocardless: $gocardless)';
   }
 }
 
 /// @nodoc
-abstract mixin class _$CrosspayProductsCopyWith<$Res>
-    implements $CrosspayProductsCopyWith<$Res> {
-  factory _$CrosspayProductsCopyWith(
-          _CrosspayProducts value, $Res Function(_CrosspayProducts) _then) =
-      __$CrosspayProductsCopyWithImpl;
+abstract mixin class _$OrcaProductsCopyWith<$Res>
+    implements $OrcaProductsCopyWith<$Res> {
+  factory _$OrcaProductsCopyWith(
+          _OrcaProducts value, $Res Function(_OrcaProducts) _then) =
+      __$OrcaProductsCopyWithImpl;
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: "playstore") CrosspayProduct? playStore,
-      @JsonKey(name: "appstore") CrosspayProduct? appStore,
-      CrosspayProduct? stripe,
-      CrosspayProduct? gocardless});
+      {@JsonKey(name: "playstore") OrcaProduct? playStore,
+      @JsonKey(name: "appstore") OrcaProduct? appStore,
+      OrcaProduct? stripe,
+      OrcaProduct? gocardless});
 
   @override
-  $CrosspayProductCopyWith<$Res>? get playStore;
+  $OrcaProductCopyWith<$Res>? get playStore;
   @override
-  $CrosspayProductCopyWith<$Res>? get appStore;
+  $OrcaProductCopyWith<$Res>? get appStore;
   @override
-  $CrosspayProductCopyWith<$Res>? get stripe;
+  $OrcaProductCopyWith<$Res>? get stripe;
   @override
-  $CrosspayProductCopyWith<$Res>? get gocardless;
+  $OrcaProductCopyWith<$Res>? get gocardless;
 }
 
 /// @nodoc
-class __$CrosspayProductsCopyWithImpl<$Res>
-    implements _$CrosspayProductsCopyWith<$Res> {
-  __$CrosspayProductsCopyWithImpl(this._self, this._then);
+class __$OrcaProductsCopyWithImpl<$Res>
+    implements _$OrcaProductsCopyWith<$Res> {
+  __$OrcaProductsCopyWithImpl(this._self, this._then);
 
-  final _CrosspayProducts _self;
-  final $Res Function(_CrosspayProducts) _then;
+  final _OrcaProducts _self;
+  final $Res Function(_OrcaProducts) _then;
 
-  /// Create a copy of CrosspayProducts
+  /// Create a copy of OrcaProducts
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -1529,108 +1565,109 @@ class __$CrosspayProductsCopyWithImpl<$Res>
     Object? stripe = freezed,
     Object? gocardless = freezed,
   }) {
-    return _then(_CrosspayProducts(
+    return _then(_OrcaProducts(
       playStore: freezed == playStore
           ? _self.playStore
           : playStore // ignore: cast_nullable_to_non_nullable
-              as CrosspayProduct?,
+              as OrcaProduct?,
       appStore: freezed == appStore
           ? _self.appStore
           : appStore // ignore: cast_nullable_to_non_nullable
-              as CrosspayProduct?,
+              as OrcaProduct?,
       stripe: freezed == stripe
           ? _self.stripe
           : stripe // ignore: cast_nullable_to_non_nullable
-              as CrosspayProduct?,
+              as OrcaProduct?,
       gocardless: freezed == gocardless
           ? _self.gocardless
           : gocardless // ignore: cast_nullable_to_non_nullable
-              as CrosspayProduct?,
+              as OrcaProduct?,
     ));
   }
 
-  /// Create a copy of CrosspayProducts
+  /// Create a copy of OrcaProducts
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CrosspayProductCopyWith<$Res>? get playStore {
+  $OrcaProductCopyWith<$Res>? get playStore {
     if (_self.playStore == null) {
       return null;
     }
 
-    return $CrosspayProductCopyWith<$Res>(_self.playStore!, (value) {
+    return $OrcaProductCopyWith<$Res>(_self.playStore!, (value) {
       return _then(_self.copyWith(playStore: value));
     });
   }
 
-  /// Create a copy of CrosspayProducts
+  /// Create a copy of OrcaProducts
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CrosspayProductCopyWith<$Res>? get appStore {
+  $OrcaProductCopyWith<$Res>? get appStore {
     if (_self.appStore == null) {
       return null;
     }
 
-    return $CrosspayProductCopyWith<$Res>(_self.appStore!, (value) {
+    return $OrcaProductCopyWith<$Res>(_self.appStore!, (value) {
       return _then(_self.copyWith(appStore: value));
     });
   }
 
-  /// Create a copy of CrosspayProducts
+  /// Create a copy of OrcaProducts
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CrosspayProductCopyWith<$Res>? get stripe {
+  $OrcaProductCopyWith<$Res>? get stripe {
     if (_self.stripe == null) {
       return null;
     }
 
-    return $CrosspayProductCopyWith<$Res>(_self.stripe!, (value) {
+    return $OrcaProductCopyWith<$Res>(_self.stripe!, (value) {
       return _then(_self.copyWith(stripe: value));
     });
   }
 
-  /// Create a copy of CrosspayProducts
+  /// Create a copy of OrcaProducts
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CrosspayProductCopyWith<$Res>? get gocardless {
+  $OrcaProductCopyWith<$Res>? get gocardless {
     if (_self.gocardless == null) {
       return null;
     }
 
-    return $CrosspayProductCopyWith<$Res>(_self.gocardless!, (value) {
+    return $OrcaProductCopyWith<$Res>(_self.gocardless!, (value) {
       return _then(_self.copyWith(gocardless: value));
     });
   }
 }
 
 /// @nodoc
-mixin _$CrosspayProduct {
+mixin _$OrcaProduct {
   String get id;
   @JsonKey(name: "product_id")
   String get productId;
   String get name;
   String? get description;
+  @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
   Map<String, dynamic>? get metadata;
 
-  /// Create a copy of CrosspayProduct
+  /// Create a copy of OrcaProduct
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $CrosspayProductCopyWith<CrosspayProduct> get copyWith =>
-      _$CrosspayProductCopyWithImpl<CrosspayProduct>(
-          this as CrosspayProduct, _$identity);
+  $OrcaProductCopyWith<OrcaProduct> get copyWith =>
+      _$OrcaProductCopyWithImpl<OrcaProduct>(
+          this as OrcaProduct, _$identity);
 
-  /// Serializes this CrosspayProduct to a JSON map.
+  /// Serializes this OrcaProduct to a JSON map.
   Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is CrosspayProduct &&
+            other is OrcaProduct &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.productId, productId) ||
                 other.productId == productId) &&
@@ -1647,33 +1684,34 @@ mixin _$CrosspayProduct {
 
   @override
   String toString() {
-    return 'CrosspayProduct(id: $id, productId: $productId, name: $name, description: $description, metadata: $metadata)';
+    return 'OrcaProduct(id: $id, productId: $productId, name: $name, description: $description, metadata: $metadata)';
   }
 }
 
 /// @nodoc
-abstract mixin class $CrosspayProductCopyWith<$Res> {
-  factory $CrosspayProductCopyWith(
-          CrosspayProduct value, $Res Function(CrosspayProduct) _then) =
-      _$CrosspayProductCopyWithImpl;
+abstract mixin class $OrcaProductCopyWith<$Res> {
+  factory $OrcaProductCopyWith(
+          OrcaProduct value, $Res Function(OrcaProduct) _then) =
+      _$OrcaProductCopyWithImpl;
   @useResult
   $Res call(
       {String id,
       @JsonKey(name: "product_id") String productId,
       String name,
       String? description,
+      @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
       Map<String, dynamic>? metadata});
 }
 
 /// @nodoc
-class _$CrosspayProductCopyWithImpl<$Res>
-    implements $CrosspayProductCopyWith<$Res> {
-  _$CrosspayProductCopyWithImpl(this._self, this._then);
+class _$OrcaProductCopyWithImpl<$Res>
+    implements $OrcaProductCopyWith<$Res> {
+  _$OrcaProductCopyWithImpl(this._self, this._then);
 
-  final CrosspayProduct _self;
-  final $Res Function(CrosspayProduct) _then;
+  final OrcaProduct _self;
+  final $Res Function(OrcaProduct) _then;
 
-  /// Create a copy of CrosspayProduct
+  /// Create a copy of OrcaProduct
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -1709,8 +1747,8 @@ class _$CrosspayProductCopyWithImpl<$Res>
   }
 }
 
-/// Adds pattern-matching-related methods to [CrosspayProduct].
-extension CrosspayProductPatterns on CrosspayProduct {
+/// Adds pattern-matching-related methods to [OrcaProduct].
+extension OrcaProductPatterns on OrcaProduct {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -1725,12 +1763,12 @@ extension CrosspayProductPatterns on CrosspayProduct {
 
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>(
-    TResult Function(_CrosspayProduct value)? $default, {
+    TResult Function(_OrcaProduct value)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case _CrosspayProduct() when $default != null:
+      case _OrcaProduct() when $default != null:
         return $default(_that);
       case _:
         return orElse();
@@ -1752,11 +1790,11 @@ extension CrosspayProductPatterns on CrosspayProduct {
 
   @optionalTypeArgs
   TResult map<TResult extends Object?>(
-    TResult Function(_CrosspayProduct value) $default,
+    TResult Function(_OrcaProduct value) $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _CrosspayProduct():
+      case _OrcaProduct():
         return $default(_that);
     }
   }
@@ -1775,11 +1813,11 @@ extension CrosspayProductPatterns on CrosspayProduct {
 
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(_CrosspayProduct value)? $default,
+    TResult? Function(_OrcaProduct value)? $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _CrosspayProduct() when $default != null:
+      case _OrcaProduct() when $default != null:
         return $default(_that);
       case _:
         return null;
@@ -1800,14 +1838,19 @@ extension CrosspayProductPatterns on CrosspayProduct {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(String id, @JsonKey(name: "product_id") String productId,
-            String name, String? description, Map<String, dynamic>? metadata)?
+    TResult Function(
+            String id,
+            @JsonKey(name: "product_id") String productId,
+            String name,
+            String? description,
+            @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
+            Map<String, dynamic>? metadata)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case _CrosspayProduct() when $default != null:
+      case _OrcaProduct() when $default != null:
         return $default(_that.id, _that.productId, _that.name,
             _that.description, _that.metadata);
       case _:
@@ -1830,13 +1873,18 @@ extension CrosspayProductPatterns on CrosspayProduct {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(String id, @JsonKey(name: "product_id") String productId,
-            String name, String? description, Map<String, dynamic>? metadata)
+    TResult Function(
+            String id,
+            @JsonKey(name: "product_id") String productId,
+            String name,
+            String? description,
+            @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
+            Map<String, dynamic>? metadata)
         $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _CrosspayProduct():
+      case _OrcaProduct():
         return $default(_that.id, _that.productId, _that.name,
             _that.description, _that.metadata);
     }
@@ -1856,13 +1904,18 @@ extension CrosspayProductPatterns on CrosspayProduct {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(String id, @JsonKey(name: "product_id") String productId,
-            String name, String? description, Map<String, dynamic>? metadata)?
+    TResult? Function(
+            String id,
+            @JsonKey(name: "product_id") String productId,
+            String name,
+            String? description,
+            @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
+            Map<String, dynamic>? metadata)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _CrosspayProduct() when $default != null:
+      case _OrcaProduct() when $default != null:
         return $default(_that.id, _that.productId, _that.name,
             _that.description, _that.metadata);
       case _:
@@ -1873,16 +1926,17 @@ extension CrosspayProductPatterns on CrosspayProduct {
 
 /// @nodoc
 @JsonSerializable()
-class _CrosspayProduct implements CrosspayProduct {
-  _CrosspayProduct(
+class _OrcaProduct implements OrcaProduct {
+  _OrcaProduct(
       {required this.id,
       @JsonKey(name: "product_id") required this.productId,
       required this.name,
       this.description,
+      @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
       final Map<String, dynamic>? metadata})
       : _metadata = metadata;
-  factory _CrosspayProduct.fromJson(Map<String, dynamic> json) =>
-      _$CrosspayProductFromJson(json);
+  factory _OrcaProduct.fromJson(Map<String, dynamic> json) =>
+      _$OrcaProductFromJson(json);
 
   @override
   final String id;
@@ -1895,6 +1949,7 @@ class _CrosspayProduct implements CrosspayProduct {
   final String? description;
   final Map<String, dynamic>? _metadata;
   @override
+  @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
   Map<String, dynamic>? get metadata {
     final value = _metadata;
     if (value == null) return null;
@@ -1903,17 +1958,17 @@ class _CrosspayProduct implements CrosspayProduct {
     return EqualUnmodifiableMapView(value);
   }
 
-  /// Create a copy of CrosspayProduct
+  /// Create a copy of OrcaProduct
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$CrosspayProductCopyWith<_CrosspayProduct> get copyWith =>
-      __$CrosspayProductCopyWithImpl<_CrosspayProduct>(this, _$identity);
+  _$OrcaProductCopyWith<_OrcaProduct> get copyWith =>
+      __$OrcaProductCopyWithImpl<_OrcaProduct>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$CrosspayProductToJson(
+    return _$OrcaProductToJson(
       this,
     );
   }
@@ -1922,7 +1977,7 @@ class _CrosspayProduct implements CrosspayProduct {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _CrosspayProduct &&
+            other is _OrcaProduct &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.productId, productId) ||
                 other.productId == productId) &&
@@ -1939,16 +1994,16 @@ class _CrosspayProduct implements CrosspayProduct {
 
   @override
   String toString() {
-    return 'CrosspayProduct(id: $id, productId: $productId, name: $name, description: $description, metadata: $metadata)';
+    return 'OrcaProduct(id: $id, productId: $productId, name: $name, description: $description, metadata: $metadata)';
   }
 }
 
 /// @nodoc
-abstract mixin class _$CrosspayProductCopyWith<$Res>
-    implements $CrosspayProductCopyWith<$Res> {
-  factory _$CrosspayProductCopyWith(
-          _CrosspayProduct value, $Res Function(_CrosspayProduct) _then) =
-      __$CrosspayProductCopyWithImpl;
+abstract mixin class _$OrcaProductCopyWith<$Res>
+    implements $OrcaProductCopyWith<$Res> {
+  factory _$OrcaProductCopyWith(
+          _OrcaProduct value, $Res Function(_OrcaProduct) _then) =
+      __$OrcaProductCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -1956,18 +2011,19 @@ abstract mixin class _$CrosspayProductCopyWith<$Res>
       @JsonKey(name: "product_id") String productId,
       String name,
       String? description,
+      @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
       Map<String, dynamic>? metadata});
 }
 
 /// @nodoc
-class __$CrosspayProductCopyWithImpl<$Res>
-    implements _$CrosspayProductCopyWith<$Res> {
-  __$CrosspayProductCopyWithImpl(this._self, this._then);
+class __$OrcaProductCopyWithImpl<$Res>
+    implements _$OrcaProductCopyWith<$Res> {
+  __$OrcaProductCopyWithImpl(this._self, this._then);
 
-  final _CrosspayProduct _self;
-  final $Res Function(_CrosspayProduct) _then;
+  final _OrcaProduct _self;
+  final $Res Function(_OrcaProduct) _then;
 
-  /// Create a copy of CrosspayProduct
+  /// Create a copy of OrcaProduct
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -1978,7 +2034,7 @@ class __$CrosspayProductCopyWithImpl<$Res>
     Object? description = freezed,
     Object? metadata = freezed,
   }) {
-    return _then(_CrosspayProduct(
+    return _then(_OrcaProduct(
       id: null == id
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -2004,7 +2060,494 @@ class __$CrosspayProductCopyWithImpl<$Res>
 }
 
 /// @nodoc
-mixin _$CrosspayStorableEntitlement {
+mixin _$OrcaPlayStorePurchasesSyncProduct {
+  String get id;
+  @JsonKey(name: "product_id")
+  String get productId;
+  @JsonKey(name: "entitlement_id")
+  String get entitlementId;
+  String get name;
+  String? get description;
+  @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
+  Map<String, dynamic>? get metadata;
+  String get receipt;
+
+  /// Create a copy of OrcaPlayStorePurchasesSyncProduct
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $OrcaPlayStorePurchasesSyncProductCopyWith<
+          OrcaPlayStorePurchasesSyncProduct>
+      get copyWith => _$OrcaPlayStorePurchasesSyncProductCopyWithImpl<
+              OrcaPlayStorePurchasesSyncProduct>(
+          this as OrcaPlayStorePurchasesSyncProduct, _$identity);
+
+  /// Serializes this OrcaPlayStorePurchasesSyncProduct to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is OrcaPlayStorePurchasesSyncProduct &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.productId, productId) ||
+                other.productId == productId) &&
+            (identical(other.entitlementId, entitlementId) ||
+                other.entitlementId == entitlementId) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            const DeepCollectionEquality().equals(other.metadata, metadata) &&
+            (identical(other.receipt, receipt) || other.receipt == receipt));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      productId,
+      entitlementId,
+      name,
+      description,
+      const DeepCollectionEquality().hash(metadata),
+      receipt);
+
+  @override
+  String toString() {
+    return 'OrcaPlayStorePurchasesSyncProduct(id: $id, productId: $productId, entitlementId: $entitlementId, name: $name, description: $description, metadata: $metadata, receipt: $receipt)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $OrcaPlayStorePurchasesSyncProductCopyWith<$Res> {
+  factory $OrcaPlayStorePurchasesSyncProductCopyWith(
+          OrcaPlayStorePurchasesSyncProduct value,
+          $Res Function(OrcaPlayStorePurchasesSyncProduct) _then) =
+      _$OrcaPlayStorePurchasesSyncProductCopyWithImpl;
+  @useResult
+  $Res call(
+      {String id,
+      @JsonKey(name: "product_id") String productId,
+      @JsonKey(name: "entitlement_id") String entitlementId,
+      String name,
+      String? description,
+      @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
+      Map<String, dynamic>? metadata,
+      String receipt});
+}
+
+/// @nodoc
+class _$OrcaPlayStorePurchasesSyncProductCopyWithImpl<$Res>
+    implements $OrcaPlayStorePurchasesSyncProductCopyWith<$Res> {
+  _$OrcaPlayStorePurchasesSyncProductCopyWithImpl(this._self, this._then);
+
+  final OrcaPlayStorePurchasesSyncProduct _self;
+  final $Res Function(OrcaPlayStorePurchasesSyncProduct) _then;
+
+  /// Create a copy of OrcaPlayStorePurchasesSyncProduct
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? productId = null,
+    Object? entitlementId = null,
+    Object? name = null,
+    Object? description = freezed,
+    Object? metadata = freezed,
+    Object? receipt = null,
+  }) {
+    return _then(_self.copyWith(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      productId: null == productId
+          ? _self.productId
+          : productId // ignore: cast_nullable_to_non_nullable
+              as String,
+      entitlementId: null == entitlementId
+          ? _self.entitlementId
+          : entitlementId // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      metadata: freezed == metadata
+          ? _self.metadata
+          : metadata // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
+      receipt: null == receipt
+          ? _self.receipt
+          : receipt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [OrcaPlayStorePurchasesSyncProduct].
+extension OrcaPlayStorePurchasesSyncProductPatterns
+    on OrcaPlayStorePurchasesSyncProduct {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_OrcaPlayStorePurchasesSyncProduct value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _OrcaPlayStorePurchasesSyncProduct() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_OrcaPlayStorePurchasesSyncProduct value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _OrcaPlayStorePurchasesSyncProduct():
+        return $default(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_OrcaPlayStorePurchasesSyncProduct value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _OrcaPlayStorePurchasesSyncProduct() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            String id,
+            @JsonKey(name: "product_id") String productId,
+            @JsonKey(name: "entitlement_id") String entitlementId,
+            String name,
+            String? description,
+            @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
+            Map<String, dynamic>? metadata,
+            String receipt)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _OrcaPlayStorePurchasesSyncProduct() when $default != null:
+        return $default(_that.id, _that.productId, _that.entitlementId,
+            _that.name, _that.description, _that.metadata, _that.receipt);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            String id,
+            @JsonKey(name: "product_id") String productId,
+            @JsonKey(name: "entitlement_id") String entitlementId,
+            String name,
+            String? description,
+            @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
+            Map<String, dynamic>? metadata,
+            String receipt)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _OrcaPlayStorePurchasesSyncProduct():
+        return $default(_that.id, _that.productId, _that.entitlementId,
+            _that.name, _that.description, _that.metadata, _that.receipt);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            String id,
+            @JsonKey(name: "product_id") String productId,
+            @JsonKey(name: "entitlement_id") String entitlementId,
+            String name,
+            String? description,
+            @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
+            Map<String, dynamic>? metadata,
+            String receipt)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _OrcaPlayStorePurchasesSyncProduct() when $default != null:
+        return $default(_that.id, _that.productId, _that.entitlementId,
+            _that.name, _that.description, _that.metadata, _that.receipt);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _OrcaPlayStorePurchasesSyncProduct
+    implements OrcaPlayStorePurchasesSyncProduct {
+  _OrcaPlayStorePurchasesSyncProduct(
+      {required this.id,
+      @JsonKey(name: "product_id") required this.productId,
+      @JsonKey(name: "entitlement_id") required this.entitlementId,
+      required this.name,
+      this.description,
+      @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
+      final Map<String, dynamic>? metadata,
+      required this.receipt})
+      : _metadata = metadata;
+  factory _OrcaPlayStorePurchasesSyncProduct.fromJson(
+          Map<String, dynamic> json) =>
+      _$OrcaPlayStorePurchasesSyncProductFromJson(json);
+
+  @override
+  final String id;
+  @override
+  @JsonKey(name: "product_id")
+  final String productId;
+  @override
+  @JsonKey(name: "entitlement_id")
+  final String entitlementId;
+  @override
+  final String name;
+  @override
+  final String? description;
+  final Map<String, dynamic>? _metadata;
+  @override
+  @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
+  Map<String, dynamic>? get metadata {
+    final value = _metadata;
+    if (value == null) return null;
+    if (_metadata is EqualUnmodifiableMapView) return _metadata;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
+  @override
+  final String receipt;
+
+  /// Create a copy of OrcaPlayStorePurchasesSyncProduct
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$OrcaPlayStorePurchasesSyncProductCopyWith<
+          _OrcaPlayStorePurchasesSyncProduct>
+      get copyWith => __$OrcaPlayStorePurchasesSyncProductCopyWithImpl<
+          _OrcaPlayStorePurchasesSyncProduct>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$OrcaPlayStorePurchasesSyncProductToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _OrcaPlayStorePurchasesSyncProduct &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.productId, productId) ||
+                other.productId == productId) &&
+            (identical(other.entitlementId, entitlementId) ||
+                other.entitlementId == entitlementId) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            const DeepCollectionEquality().equals(other._metadata, _metadata) &&
+            (identical(other.receipt, receipt) || other.receipt == receipt));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      productId,
+      entitlementId,
+      name,
+      description,
+      const DeepCollectionEquality().hash(_metadata),
+      receipt);
+
+  @override
+  String toString() {
+    return 'OrcaPlayStorePurchasesSyncProduct(id: $id, productId: $productId, entitlementId: $entitlementId, name: $name, description: $description, metadata: $metadata, receipt: $receipt)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$OrcaPlayStorePurchasesSyncProductCopyWith<$Res>
+    implements $OrcaPlayStorePurchasesSyncProductCopyWith<$Res> {
+  factory _$OrcaPlayStorePurchasesSyncProductCopyWith(
+          _OrcaPlayStorePurchasesSyncProduct value,
+          $Res Function(_OrcaPlayStorePurchasesSyncProduct) _then) =
+      __$OrcaPlayStorePurchasesSyncProductCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      @JsonKey(name: "product_id") String productId,
+      @JsonKey(name: "entitlement_id") String entitlementId,
+      String name,
+      String? description,
+      @JsonKey(fromJson: _fromJsonMetadata, toJson: _toJsonMetadata)
+      Map<String, dynamic>? metadata,
+      String receipt});
+}
+
+/// @nodoc
+class __$OrcaPlayStorePurchasesSyncProductCopyWithImpl<$Res>
+    implements _$OrcaPlayStorePurchasesSyncProductCopyWith<$Res> {
+  __$OrcaPlayStorePurchasesSyncProductCopyWithImpl(this._self, this._then);
+
+  final _OrcaPlayStorePurchasesSyncProduct _self;
+  final $Res Function(_OrcaPlayStorePurchasesSyncProduct) _then;
+
+  /// Create a copy of OrcaPlayStorePurchasesSyncProduct
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? productId = null,
+    Object? entitlementId = null,
+    Object? name = null,
+    Object? description = freezed,
+    Object? metadata = freezed,
+    Object? receipt = null,
+  }) {
+    return _then(_OrcaPlayStorePurchasesSyncProduct(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      productId: null == productId
+          ? _self.productId
+          : productId // ignore: cast_nullable_to_non_nullable
+              as String,
+      entitlementId: null == entitlementId
+          ? _self.entitlementId
+          : entitlementId // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _self.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: freezed == description
+          ? _self.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      metadata: freezed == metadata
+          ? _self._metadata
+          : metadata // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
+      receipt: null == receipt
+          ? _self.receipt
+          : receipt // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+mixin _$OrcaStorableEntitlement {
   String get id;
   @JsonKey(name: "product_id")
   String get productId;
@@ -2020,7 +2563,7 @@ mixin _$CrosspayStorableEntitlement {
       fromJson: _dateTimeNullableFromEpoch,
       toJson: _dateTimeNullableToEpoch)
   DateTime? get trialExpiresAt;
-  CrosspayStore get store;
+  OrcaStore get store;
   EntitlementStatus get status;
   @JsonKey(name: "renewal_status")
   SubscriptionRenewalStatus? get renewalStatus;
@@ -2029,23 +2572,23 @@ mixin _$CrosspayStorableEntitlement {
   @JsonKey(name: "purchase_state")
   String? get purchaseState;
 
-  /// Create a copy of CrosspayStorableEntitlement
+  /// Create a copy of OrcaStorableEntitlement
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $CrosspayStorableEntitlementCopyWith<CrosspayStorableEntitlement>
-      get copyWith => _$CrosspayStorableEntitlementCopyWithImpl<
-              CrosspayStorableEntitlement>(
-          this as CrosspayStorableEntitlement, _$identity);
+  $OrcaStorableEntitlementCopyWith<OrcaStorableEntitlement>
+      get copyWith => _$OrcaStorableEntitlementCopyWithImpl<
+              OrcaStorableEntitlement>(
+          this as OrcaStorableEntitlement, _$identity);
 
-  /// Serializes this CrosspayStorableEntitlement to a JSON map.
+  /// Serializes this OrcaStorableEntitlement to a JSON map.
   Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is CrosspayStorableEntitlement &&
+            other is OrcaStorableEntitlement &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.productId, productId) ||
                 other.productId == productId) &&
@@ -2082,16 +2625,16 @@ mixin _$CrosspayStorableEntitlement {
 
   @override
   String toString() {
-    return 'CrosspayStorableEntitlement(id: $id, productId: $productId, entitlementId: $entitlementId, expiresAt: $expiresAt, trialExpiresAt: $trialExpiresAt, store: $store, status: $status, renewalStatus: $renewalStatus, entitlementType: $entitlementType, purchaseState: $purchaseState)';
+    return 'OrcaStorableEntitlement(id: $id, productId: $productId, entitlementId: $entitlementId, expiresAt: $expiresAt, trialExpiresAt: $trialExpiresAt, store: $store, status: $status, renewalStatus: $renewalStatus, entitlementType: $entitlementType, purchaseState: $purchaseState)';
   }
 }
 
 /// @nodoc
-abstract mixin class $CrosspayStorableEntitlementCopyWith<$Res> {
-  factory $CrosspayStorableEntitlementCopyWith(
-          CrosspayStorableEntitlement value,
-          $Res Function(CrosspayStorableEntitlement) _then) =
-      _$CrosspayStorableEntitlementCopyWithImpl;
+abstract mixin class $OrcaStorableEntitlementCopyWith<$Res> {
+  factory $OrcaStorableEntitlementCopyWith(
+          OrcaStorableEntitlement value,
+          $Res Function(OrcaStorableEntitlement) _then) =
+      _$OrcaStorableEntitlementCopyWithImpl;
   @useResult
   $Res call(
       {String id,
@@ -2107,7 +2650,7 @@ abstract mixin class $CrosspayStorableEntitlementCopyWith<$Res> {
           fromJson: _dateTimeNullableFromEpoch,
           toJson: _dateTimeNullableToEpoch)
       DateTime? trialExpiresAt,
-      CrosspayStore store,
+      OrcaStore store,
       EntitlementStatus status,
       @JsonKey(name: "renewal_status") SubscriptionRenewalStatus? renewalStatus,
       @JsonKey(name: "entitlement_type") EntitlementType entitlementType,
@@ -2115,14 +2658,14 @@ abstract mixin class $CrosspayStorableEntitlementCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CrosspayStorableEntitlementCopyWithImpl<$Res>
-    implements $CrosspayStorableEntitlementCopyWith<$Res> {
-  _$CrosspayStorableEntitlementCopyWithImpl(this._self, this._then);
+class _$OrcaStorableEntitlementCopyWithImpl<$Res>
+    implements $OrcaStorableEntitlementCopyWith<$Res> {
+  _$OrcaStorableEntitlementCopyWithImpl(this._self, this._then);
 
-  final CrosspayStorableEntitlement _self;
-  final $Res Function(CrosspayStorableEntitlement) _then;
+  final OrcaStorableEntitlement _self;
+  final $Res Function(OrcaStorableEntitlement) _then;
 
-  /// Create a copy of CrosspayStorableEntitlement
+  /// Create a copy of OrcaStorableEntitlement
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -2162,7 +2705,7 @@ class _$CrosspayStorableEntitlementCopyWithImpl<$Res>
       store: null == store
           ? _self.store
           : store // ignore: cast_nullable_to_non_nullable
-              as CrosspayStore,
+              as OrcaStore,
       status: null == status
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -2183,8 +2726,8 @@ class _$CrosspayStorableEntitlementCopyWithImpl<$Res>
   }
 }
 
-/// Adds pattern-matching-related methods to [CrosspayStorableEntitlement].
-extension CrosspayStorableEntitlementPatterns on CrosspayStorableEntitlement {
+/// Adds pattern-matching-related methods to [OrcaStorableEntitlement].
+extension OrcaStorableEntitlementPatterns on OrcaStorableEntitlement {
   /// A variant of `map` that fallback to returning `orElse`.
   ///
   /// It is equivalent to doing:
@@ -2199,12 +2742,12 @@ extension CrosspayStorableEntitlementPatterns on CrosspayStorableEntitlement {
 
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>(
-    TResult Function(_CrosspayStorableEntitlement value)? $default, {
+    TResult Function(_OrcaStorableEntitlement value)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case _CrosspayStorableEntitlement() when $default != null:
+      case _OrcaStorableEntitlement() when $default != null:
         return $default(_that);
       case _:
         return orElse();
@@ -2226,11 +2769,11 @@ extension CrosspayStorableEntitlementPatterns on CrosspayStorableEntitlement {
 
   @optionalTypeArgs
   TResult map<TResult extends Object?>(
-    TResult Function(_CrosspayStorableEntitlement value) $default,
+    TResult Function(_OrcaStorableEntitlement value) $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _CrosspayStorableEntitlement():
+      case _OrcaStorableEntitlement():
         return $default(_that);
     }
   }
@@ -2249,11 +2792,11 @@ extension CrosspayStorableEntitlementPatterns on CrosspayStorableEntitlement {
 
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(_CrosspayStorableEntitlement value)? $default,
+    TResult? Function(_OrcaStorableEntitlement value)? $default,
   ) {
     final _that = this;
     switch (_that) {
-      case _CrosspayStorableEntitlement() when $default != null:
+      case _OrcaStorableEntitlement() when $default != null:
         return $default(_that);
       case _:
         return null;
@@ -2288,7 +2831,7 @@ extension CrosspayStorableEntitlementPatterns on CrosspayStorableEntitlement {
                 fromJson: _dateTimeNullableFromEpoch,
                 toJson: _dateTimeNullableToEpoch)
             DateTime? trialExpiresAt,
-            CrosspayStore store,
+            OrcaStore store,
             EntitlementStatus status,
             @JsonKey(name: "renewal_status")
             SubscriptionRenewalStatus? renewalStatus,
@@ -2299,7 +2842,7 @@ extension CrosspayStorableEntitlementPatterns on CrosspayStorableEntitlement {
   }) {
     final _that = this;
     switch (_that) {
-      case _CrosspayStorableEntitlement() when $default != null:
+      case _OrcaStorableEntitlement() when $default != null:
         return $default(
             _that.id,
             _that.productId,
@@ -2345,7 +2888,7 @@ extension CrosspayStorableEntitlementPatterns on CrosspayStorableEntitlement {
                 fromJson: _dateTimeNullableFromEpoch,
                 toJson: _dateTimeNullableToEpoch)
             DateTime? trialExpiresAt,
-            CrosspayStore store,
+            OrcaStore store,
             EntitlementStatus status,
             @JsonKey(name: "renewal_status")
             SubscriptionRenewalStatus? renewalStatus,
@@ -2355,7 +2898,7 @@ extension CrosspayStorableEntitlementPatterns on CrosspayStorableEntitlement {
   ) {
     final _that = this;
     switch (_that) {
-      case _CrosspayStorableEntitlement():
+      case _OrcaStorableEntitlement():
         return $default(
             _that.id,
             _that.productId,
@@ -2398,7 +2941,7 @@ extension CrosspayStorableEntitlementPatterns on CrosspayStorableEntitlement {
                 fromJson: _dateTimeNullableFromEpoch,
                 toJson: _dateTimeNullableToEpoch)
             DateTime? trialExpiresAt,
-            CrosspayStore store,
+            OrcaStore store,
             EntitlementStatus status,
             @JsonKey(name: "renewal_status")
             SubscriptionRenewalStatus? renewalStatus,
@@ -2408,7 +2951,7 @@ extension CrosspayStorableEntitlementPatterns on CrosspayStorableEntitlement {
   ) {
     final _that = this;
     switch (_that) {
-      case _CrosspayStorableEntitlement() when $default != null:
+      case _OrcaStorableEntitlement() when $default != null:
         return $default(
             _that.id,
             _that.productId,
@@ -2428,8 +2971,8 @@ extension CrosspayStorableEntitlementPatterns on CrosspayStorableEntitlement {
 
 /// @nodoc
 @JsonSerializable()
-class _CrosspayStorableEntitlement implements CrosspayStorableEntitlement {
-  _CrosspayStorableEntitlement(
+class _OrcaStorableEntitlement implements OrcaStorableEntitlement {
+  _OrcaStorableEntitlement(
       {required this.id,
       @JsonKey(name: "product_id") required this.productId,
       @JsonKey(name: "entitlement_id") required this.entitlementId,
@@ -2448,8 +2991,8 @@ class _CrosspayStorableEntitlement implements CrosspayStorableEntitlement {
       @JsonKey(name: "renewal_status") required this.renewalStatus,
       @JsonKey(name: "entitlement_type") required this.entitlementType,
       @JsonKey(name: "purchase_state") this.purchaseState});
-  factory _CrosspayStorableEntitlement.fromJson(Map<String, dynamic> json) =>
-      _$CrosspayStorableEntitlementFromJson(json);
+  factory _OrcaStorableEntitlement.fromJson(Map<String, dynamic> json) =>
+      _$OrcaStorableEntitlementFromJson(json);
 
   @override
   final String id;
@@ -2472,7 +3015,7 @@ class _CrosspayStorableEntitlement implements CrosspayStorableEntitlement {
       toJson: _dateTimeNullableToEpoch)
   final DateTime? trialExpiresAt;
   @override
-  final CrosspayStore store;
+  final OrcaStore store;
   @override
   final EntitlementStatus status;
   @override
@@ -2485,18 +3028,18 @@ class _CrosspayStorableEntitlement implements CrosspayStorableEntitlement {
   @JsonKey(name: "purchase_state")
   final String? purchaseState;
 
-  /// Create a copy of CrosspayStorableEntitlement
+  /// Create a copy of OrcaStorableEntitlement
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$CrosspayStorableEntitlementCopyWith<_CrosspayStorableEntitlement>
-      get copyWith => __$CrosspayStorableEntitlementCopyWithImpl<
-          _CrosspayStorableEntitlement>(this, _$identity);
+  _$OrcaStorableEntitlementCopyWith<_OrcaStorableEntitlement>
+      get copyWith => __$OrcaStorableEntitlementCopyWithImpl<
+          _OrcaStorableEntitlement>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$CrosspayStorableEntitlementToJson(
+    return _$OrcaStorableEntitlementToJson(
       this,
     );
   }
@@ -2505,7 +3048,7 @@ class _CrosspayStorableEntitlement implements CrosspayStorableEntitlement {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _CrosspayStorableEntitlement &&
+            other is _OrcaStorableEntitlement &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.productId, productId) ||
                 other.productId == productId) &&
@@ -2542,17 +3085,17 @@ class _CrosspayStorableEntitlement implements CrosspayStorableEntitlement {
 
   @override
   String toString() {
-    return 'CrosspayStorableEntitlement(id: $id, productId: $productId, entitlementId: $entitlementId, expiresAt: $expiresAt, trialExpiresAt: $trialExpiresAt, store: $store, status: $status, renewalStatus: $renewalStatus, entitlementType: $entitlementType, purchaseState: $purchaseState)';
+    return 'OrcaStorableEntitlement(id: $id, productId: $productId, entitlementId: $entitlementId, expiresAt: $expiresAt, trialExpiresAt: $trialExpiresAt, store: $store, status: $status, renewalStatus: $renewalStatus, entitlementType: $entitlementType, purchaseState: $purchaseState)';
   }
 }
 
 /// @nodoc
-abstract mixin class _$CrosspayStorableEntitlementCopyWith<$Res>
-    implements $CrosspayStorableEntitlementCopyWith<$Res> {
-  factory _$CrosspayStorableEntitlementCopyWith(
-          _CrosspayStorableEntitlement value,
-          $Res Function(_CrosspayStorableEntitlement) _then) =
-      __$CrosspayStorableEntitlementCopyWithImpl;
+abstract mixin class _$OrcaStorableEntitlementCopyWith<$Res>
+    implements $OrcaStorableEntitlementCopyWith<$Res> {
+  factory _$OrcaStorableEntitlementCopyWith(
+          _OrcaStorableEntitlement value,
+          $Res Function(_OrcaStorableEntitlement) _then) =
+      __$OrcaStorableEntitlementCopyWithImpl;
   @override
   @useResult
   $Res call(
@@ -2569,7 +3112,7 @@ abstract mixin class _$CrosspayStorableEntitlementCopyWith<$Res>
           fromJson: _dateTimeNullableFromEpoch,
           toJson: _dateTimeNullableToEpoch)
       DateTime? trialExpiresAt,
-      CrosspayStore store,
+      OrcaStore store,
       EntitlementStatus status,
       @JsonKey(name: "renewal_status") SubscriptionRenewalStatus? renewalStatus,
       @JsonKey(name: "entitlement_type") EntitlementType entitlementType,
@@ -2577,14 +3120,14 @@ abstract mixin class _$CrosspayStorableEntitlementCopyWith<$Res>
 }
 
 /// @nodoc
-class __$CrosspayStorableEntitlementCopyWithImpl<$Res>
-    implements _$CrosspayStorableEntitlementCopyWith<$Res> {
-  __$CrosspayStorableEntitlementCopyWithImpl(this._self, this._then);
+class __$OrcaStorableEntitlementCopyWithImpl<$Res>
+    implements _$OrcaStorableEntitlementCopyWith<$Res> {
+  __$OrcaStorableEntitlementCopyWithImpl(this._self, this._then);
 
-  final _CrosspayStorableEntitlement _self;
-  final $Res Function(_CrosspayStorableEntitlement) _then;
+  final _OrcaStorableEntitlement _self;
+  final $Res Function(_OrcaStorableEntitlement) _then;
 
-  /// Create a copy of CrosspayStorableEntitlement
+  /// Create a copy of OrcaStorableEntitlement
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -2600,7 +3143,7 @@ class __$CrosspayStorableEntitlementCopyWithImpl<$Res>
     Object? entitlementType = null,
     Object? purchaseState = freezed,
   }) {
-    return _then(_CrosspayStorableEntitlement(
+    return _then(_OrcaStorableEntitlement(
       id: null == id
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -2624,7 +3167,7 @@ class __$CrosspayStorableEntitlementCopyWithImpl<$Res>
       store: null == store
           ? _self.store
           : store // ignore: cast_nullable_to_non_nullable
-              as CrosspayStore,
+              as OrcaStore,
       status: null == status
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable

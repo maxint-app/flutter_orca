@@ -1,24 +1,24 @@
 part of 'models.dart';
 
-enum CrosspayExceptionType {
+enum OrcaExceptionType {
   alreadyActive,
   crossUpgradeDowngrade,
 }
 
-class CrosspayException implements Exception {
+class OrcaException implements Exception {
   final String message;
-  final CrosspayExceptionType type;
+  final OrcaExceptionType type;
 
-  CrosspayException(this.message, this.type);
+  OrcaException(this.message, this.type);
 
-  CrosspayException.alreadyActive(String message)
-      : this(message, CrosspayExceptionType.alreadyActive);
+  OrcaException.alreadyActive(String message)
+      : this(message, OrcaExceptionType.alreadyActive);
 
-  CrosspayException.crossUpgradeDowngrade(String message)
-      : this(message, CrosspayExceptionType.crossUpgradeDowngrade);
+  OrcaException.crossUpgradeDowngrade(String message)
+      : this(message, OrcaExceptionType.crossUpgradeDowngrade);
 
   @override
   String toString() {
-    return 'CrosspayException(${type.name}): $message';
+    return 'OrcaException(${type.name}): $message';
   }
 }

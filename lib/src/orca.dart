@@ -5,15 +5,15 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_client_sse/constants/sse_request_type_enum.dart';
 import 'package:flutter_client_sse/flutter_client_sse.dart';
-import 'package:flutter_crosspay/src/core/core.dart';
-import 'package:flutter_crosspay/src/core/gocardless.dart';
+import 'package:flutter_orca/src/core/core.dart';
+import 'package:flutter_orca/src/core/gocardless.dart';
 import './core/iap.dart';
 import './core/stripe.dart';
 import './models/models.dart';
 import './utils/platform.dart';
 import 'package:in_app_purchase_android/billing_client_wrappers.dart';
 
-class CrosspayEndpoints {
+class OrcaEndpoints {
   final String entitlements;
   final String identifyCustomer;
   final String activeEntitlements;
@@ -22,8 +22,9 @@ class CrosspayEndpoints {
   final String stripeCheckoutSession;
   final String gocardlessBillingRequestFlow;
   final String purchasesStream;
+  final String playStoreSyncPurchases;
 
-  const CrosspayEndpoints({
+  const OrcaEndpoints({
     required this.entitlements,
     required this.activeEntitlements,
     required this.stripeListProduct,
@@ -32,18 +33,19 @@ class CrosspayEndpoints {
     required this.gocardlessListProduct,
     required this.purchasesStream,
     required this.identifyCustomer,
+    required this.playStoreSyncPurchases,
   });
 }
 
-enum CrosspayEnvironment {
+enum OrcaEnvironment {
   production("prod"),
   sandbox("sandbox");
 
   final String label;
-  const CrosspayEnvironment(this.label);
+  const OrcaEnvironment(this.label);
 }
 
-class FlutterCrosspay {
+class FlutterOrca {
   String? _customerEmail;
   String? _customerId;
   final StreamController<PurchaseEvent> _streamController;
@@ -55,16 +57,16 @@ class FlutterCrosspay {
 
   final String publicKey;
 
-  /// Create a new instance of FlutterCrosspay.
+  /// Create a new instance of FlutterOrca.
   ///
   /// [customerEmail] is the user id to use for purchases.
   /// This is to identify the user in the server and grant access accordingly.
   /// You can call [identify] and [logout] to set and unset the user id later.
   /// But this must be set (if not set) before calling [purchase].
-  FlutterCrosspay({
+  FlutterOrca({
     required this.publicKey,
-    required CrosspayEnvironment environment,
-    String baseUrl = "https://api.crosspay.dev/tenant",
+    required OrcaEnvironment environment,
+    String baseUrl = "https://api.orca.maxint.com/tenant",
     String? customerEmail,
   })  : dio = Dio(BaseOptions(baseUrl: baseUrl, headers: {
           "api-key": publicKey,
@@ -173,8 +175,8 @@ class FlutterCrosspay {
   }
 
   Future<void> purchase(
-    CrosspayEntitlement product, {
-    CrosspayProduct? proratedProduct,
+    OrcaEntitlement product, {
+    OrcaProduct? proratedProduct,
     ProrationMode? prorationMode,
     required ExternalStore externalStore,
     required String redirectUrl,
@@ -219,11 +221,11 @@ class FlutterCrosspay {
     }
   }
 
-  /// Get the active [CrosspayStorableEntitlement]
+  /// Get the active [OrcaStorableEntitlement]
   ///
   /// This gives the active entitlements stored in DB. This is usually not used
   /// that much but it has receipts and expiration details.
-  Future<List<CrosspayStorableEntitlement>> getActiveEntitlements() async {
+  Future<List<OrcaStorableEntitlement>> getActiveEntitlements() async {
     assert(
       _customerEmail != null,
       "Customer email is not set. Please call identify() to set the customer email before calling getActiveEntitlements().",
@@ -243,7 +245,7 @@ class FlutterCrosspay {
         _customerEmail!); // this is a core method so same for all platforms
   }
 
-  Future<List<CrosspayEntitlement>> listEntitlements() async {
+  Future<List<OrcaEntitlement>> listEntitlements() async {
     return _iapStore
         .listEntitlements(); // this is a core method so same for all platforms
   }

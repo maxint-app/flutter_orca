@@ -1,17 +1,15 @@
 library;
 
-export 'src/crosspay.dart';
+export 'src/orca.dart';
 export 'src/models/models.dart'
     show
-        CrosspayStorableEntitlement,
-        CrosspayEntitlement,
-        CrosspayException,
-        CrosspayExceptionType,
-        CrosspayProduct,
+        OrcaStorableEntitlement,
+        OrcaEntitlement,
+        OrcaException,
+        OrcaExceptionType,
+        OrcaProduct,
         ProrationMode,
-        CrosspayQualifiedProductId,
-        CrosspayStorableEntitlementQualifiedProductId,
-        CrosspayProducts,
+        OrcaProducts,
         PurchaseEventType,
         PurchaseEvent,
         SubscriptionStoreProduct,
@@ -20,6 +18,6 @@ export 'src/models/models.dart'
         SubscriptionGocardlessProduct,
         SubscriptionRenewalStatus,
         EntitlementStatus,
-        CrosspayStore,
+        OrcaStore,
         ExternalStore,
         EntitlementType;

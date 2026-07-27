@@ -71,10 +71,8 @@ class InAppPurchaseSubscriptionStore extends Store {
 
       for (final entitlement in entitlements) {
         for (var purchase in purchasesResult.pastPurchases) {
-          final productId = entitlement.products.playStore
-              ?.qualifiedProductId(entitlement.entitlementType);
-          final isMatchingProduct = purchase.productID == productId ||
-              productId?.startsWith(purchase.productID) == true;
+          final productId = entitlement.products.playStore?.productId;
+          final isMatchingProduct = purchase.productID == productId;
           if (isMatchingProduct &&
               entitlement.entitlementType == EntitlementType.consumable &&
               (purchase.status == PurchaseStatus.purchased ||
@@ -87,17 +85,14 @@ class InAppPurchaseSubscriptionStore extends Store {
   }
 
   Future<List<ProductDetails>> _queryPlatformProducts(
-    List<CrosspayEntitlement> entitlements,
+    List<OrcaEntitlement> entitlements,
   ) async {
     final productIds = entitlements
         .map((s) {
           if (kIsAndroid) {
-            return s.products.playStore?.qualifiedProductId(s.entitlementType);
-          } else if (kIsMacOS || kIsIOS) {
-            return s.products.appStore?.qualifiedProductId(s.entitlementType);
+            return unzipPlayStoreProductId(s.products.playStore!).productId;
           } else {
-            return s.products.stripe?.qualifiedProductId(s.entitlementType) ??
-                s.products.gocardless?.qualifiedProductId(s.entitlementType);
+            return s.products.appStore?.productId;
           }
         })
         .nonNulls
@@ -119,36 +114,82 @@ class InAppPurchaseSubscriptionStore extends Store {
 
     final platformProducts = await _queryPlatformProducts(entitlements);
 
-    _storeProducts = platformProducts.map((platformProduct) {
-      final entitlement = entitlements.firstWhere((e) {
-        if (kIsAndroid) {
-          return e.products.playStore?.qualifiedProductId(e.entitlementType) == platformProduct.id;
-        }
-        return e.products.appStore?.qualifiedProductId(e.entitlementType) == platformProduct.id;
-      });
+    final store = kIsAndroid ? OrcaStore.playStore : OrcaStore.appStore;
+    final storeProducts = <SubscriptionStoreProduct>[];
 
-      return SubscriptionStoreProduct(
-        id: platformProduct.id,
-        name: platformProduct.title,
-        accessLevel: entitlement.name,
-        currencyCode: platformProduct.currencyCode,
-        description: platformProduct.description,
-        formattedPrice: platformProduct.price,
-        price: platformProduct.rawPrice,
-        store: kIsAndroid ? CrosspayStore.playStore : CrosspayStore.appStore,
-        subscriptionRecurrenceDays: entitlement.period?.inDays,
-        productType: entitlement.entitlementType,
-      );
-    }).toList();
+    for (final entitlement in entitlements) {
+      if (kIsAndroid &&
+          entitlement.entitlementType == EntitlementType.subscription) {
+        final (:productId, :basePlanId) =
+            unzipPlayStoreProductId(entitlement.products.playStore!);
+
+        final storeProduct = platformProducts.firstWhereOrNull((p) {
+          final basePlan = (p as GooglePlayProductDetails)
+              .productDetails
+              .subscriptionOfferDetails
+              ?.firstWhereOrNull((offer) => offer.basePlanId == basePlanId);
+          return p.id == productId && basePlan != null;
+        });
+
+        if (storeProduct == null) {
+          continue;
+        }
+
+        final basePlan = (storeProduct as GooglePlayProductDetails)
+            .productDetails
+            .subscriptionOfferDetails!
+            .firstWhere((offer) => offer.basePlanId == basePlanId);
+
+        storeProducts.add(SubscriptionStoreProduct(
+          id: entitlement.products.playStore!
+              .productId, // Use the original product ID with base plan ID for subscriptions
+          name: storeProduct.title,
+          accessLevel: entitlement.name,
+          currencyCode: basePlan.pricingPhases[0].priceCurrencyCode,
+          description: storeProduct.description,
+          formattedPrice: basePlan.pricingPhases[0].formattedPrice,
+          price: basePlan.pricingPhases[0].priceAmountMicros / 1_000_000,
+          store: OrcaStore.playStore,
+          subscriptionRecurrenceDays: entitlement.period?.inDays,
+          productType: entitlement.entitlementType,
+          entitlementId: entitlement.id,
+        ));
+      } else {
+        final storeProduct = platformProducts.firstWhereOrNull(
+          (p) => p.id == entitlement.products[store]?.productId,
+        );
+
+        if (storeProduct == null) {
+          continue;
+        }
+
+        storeProducts.add(SubscriptionStoreProduct(
+          id: entitlement.products[store]!
+              .productId, // Use the original product ID as the store product ID
+          name: storeProduct.title,
+          accessLevel: entitlement.name,
+          currencyCode: storeProduct.currencyCode,
+          description: storeProduct.description,
+          formattedPrice: storeProduct.price,
+          price: storeProduct.rawPrice,
+          store: store,
+          subscriptionRecurrenceDays: entitlement.period?.inDays,
+          productType: entitlement.entitlementType,
+          entitlementId: entitlement.id,
+        ));
+      }
+    }
+
+    _storeProducts = storeProducts;
 
     return _storeProducts!;
   }
 
   @override
   Future<void> purchase(
-    CrosspayEntitlement entitlement,
+    OrcaEntitlement entitlement,
     String customerEmail, {
-    CrosspayProduct? proratedProduct,
+    OrcaProduct? proratedProduct,
     ProrationMode? prorationMode,
     required String redirectUrl,
     required String failureRedirectUrl,
@@ -157,50 +198,77 @@ class InAppPurchaseSubscriptionStore extends Store {
     final entitlements = await listEntitlements();
     final platformProducts = await _queryPlatformProducts(entitlements);
 
+    String? selectedOfferToken;
     final platformProduct = platformProducts.firstWhere(
       (p) {
-        if (kIsIOS || kIsMacOS) {
-          return p.id == entitlement.products.appStore?.qualifiedProductId(entitlement.entitlementType);
-        }
-        if (entitlement.entitlementType != EntitlementType.subscription) {
-          return p.id == entitlement.products.playStore?.qualifiedProductId(entitlement.entitlementType);
+        print(
+          "Platform product: ${p.id}\n"
+          "Name: ${p.title}\n"
+          "Description: ${p.description}\n"
+          "Price: ${p.price}\n"
+          "Currency code: ${p.currencyCode}\n"
+          "Entitlement product ID: ${entitlement.products.playStore?.productId ?? entitlement.products.appStore?.productId}\n"
+          "Entitlement store: ${kIsAndroid ? 'playStore' : 'appStore'}\n"
+          "Base plans: ${(p is GooglePlayProductDetails) ? p.productDetails.subscriptionOfferDetails?.map((offer) => offer.basePlanId).join(', ') : 'N/A'}\n"
+          "-----------------------------------\n",
+        );
+
+        final store =
+            kIsAndroid ? OrcaStore.playStore : OrcaStore.appStore;
+        final product = entitlement.products[store];
+
+        /// Android product ids are productId:basePlanId for subscriptions
+        /// This extracts the product id and base plan id
+        if (kIsAndroid &&
+            entitlement.entitlementType == EntitlementType.subscription) {
+          final (:productId, :basePlanId) = unzipPlayStoreProductId(product!);
+
+          return (p as GooglePlayProductDetails)
+                  .productDetails
+                  .subscriptionOfferDetails
+                  ?.any((offer) {
+                if (offer.basePlanId == basePlanId && p.id == productId) {
+                  selectedOfferToken = offer.offerIdToken;
+                  return true;
+                }
+                return false;
+              }) ??
+              false;
         }
 
-        final playStoreParts =
-            entitlement.products.playStore?.productId.split(':') ?? [];
-        final productId =
-            playStoreParts.isNotEmpty ? playStoreParts.first : null;
-        final basePlanId = playStoreParts.length > 1 ? playStoreParts[1] : null;
-
-        return (p as GooglePlayProductDetails)
-                .productDetails
-                .subscriptionOfferDetails
-                ?.any((offer) =>
-                    offer.basePlanId == basePlanId && p.id == productId) ??
-            false;
+        return p.id == product?.productId;
       },
       orElse: () => throw Exception('Product not found'),
     );
 
-    final purchaseParam = PurchaseParam(
-      productDetails: platformProduct,
-      applicationUserName: _customerId,
-    );
+    final purchaseParam = kIsAndroid
+        ? GooglePlayPurchaseParam(
+            productDetails: platformProduct,
+            applicationUserName: _customerId,
+            offerToken: selectedOfferToken,
+          )
+        : PurchaseParam(
+            productDetails: platformProduct,
+            applicationUserName: _customerId,
+          );
 
     final activeEntitlements = await getActiveEntitlements(customerEmail);
+
+    /// Subscription and non-consumable products should not be allowed to be purchased
+    /// if the user already has an active entitlement for that product
     final isActive = activeEntitlements.any((e) =>
         entitlement.id == e.id &&
         (entitlement.entitlementType == EntitlementType.subscription ||
             entitlement.entitlementType == EntitlementType.nonConsumable));
 
     if (isActive) {
-      throw CrosspayException.alreadyActive(
+      throw OrcaException.alreadyActive(
         "User is already ${entitlement.entitlementType == EntitlementType.subscription ? 'subscribed to' : 'purchased'} this entitlement '${entitlement.name}'. "
         "User can not be allowed to purchase the entitlement product again",
       );
     }
 
-    /// Automatically handling Google Play Store upgrade/downgrade
+    /// Handling Google Play Store upgrade/downgrade
     if (kIsAndroid && prorationMode != null && proratedProduct != null) {
       final billingClient = InAppPurchase.instance
           .getPlatformAddition<InAppPurchaseAndroidPlatformAddition>();
@@ -212,20 +280,44 @@ class InAppPurchaseSubscriptionStore extends Store {
         throw oldPurchaseDetails.error!;
       }
 
-      final oldActiveEntitlement =
-          activeEntitlements.firstWhereOrNull((e) => e.productId == proratedProduct.productId);
+      final oldActiveEntitlement = activeEntitlements
+          .firstWhereOrNull((e) => e.productId == proratedProduct.productId);
+
+      final playStoreSyncedProducts =
+          kIsAndroid && oldPurchaseDetails.pastPurchases.isNotEmpty
+              ? await syncPlayStorePurchases(
+                  customerEmail,
+                  oldPurchaseDetails.pastPurchases,
+                )
+              : null;
 
       final oldPurchase = oldPurchaseDetails.pastPurchases.firstWhereOrNull(
-        (p) =>
-            p.productID == oldActiveEntitlement?.qualifiedProductId() &&
-            (p.status == PurchaseStatus.purchased ||
-                p.status == PurchaseStatus.restored),
+        (p) {
+          if (kIsAndroid) {
+            final purchaseProduct = playStoreSyncedProducts?.firstWhereOrNull(
+                (s) => s.receipt == p.verificationData.serverVerificationData);
+            final oldPlayStoreProductInfo = oldActiveEntitlement == null
+                ? null
+                : unzipPlayStoreEntitlementProductId(oldActiveEntitlement);
+
+            return purchaseProduct != null &&
+                purchaseProduct.productId ==
+                    oldPlayStoreProductInfo?.productId &&
+                (p.status == PurchaseStatus.purchased ||
+                    p.status == PurchaseStatus.restored);
+          }
+
+          return p.productID == oldActiveEntitlement?.productId &&
+              (p.status == PurchaseStatus.purchased ||
+                  p.status == PurchaseStatus.restored);
+        },
       );
 
       if (oldPurchase != null) {
         final purchaseParam = GooglePlayPurchaseParam(
           applicationUserName: _customerId,
           productDetails: platformProduct,
+          offerToken: selectedOfferToken,
           changeSubscriptionParam: ChangeSubscriptionParam(
             replacementMode: replacementMode,
             oldPurchaseDetails: oldPurchase,

@@ -15,11 +15,12 @@ _SubscriptionStoreProduct _$SubscriptionStoreProductFromJson(
       price: (json['price'] as num).toDouble(),
       formattedPrice: json['formattedPrice'] as String,
       currencyCode: json['currencyCode'] as String,
-      store: $enumDecode(_$CrosspayStoreEnumMap, json['store']),
+      store: $enumDecode(_$OrcaStoreEnumMap, json['store']),
       subscriptionRecurrenceDays:
           (json['subscriptionRecurrenceDays'] as num?)?.toInt(),
       accessLevel: json['accessLevel'] as String,
       productType: $enumDecode(_$EntitlementTypeEnumMap, json['productType']),
+      entitlementId: json['entitlementId'] as String,
     );
 
 Map<String, dynamic> _$SubscriptionStoreProductToJson(
@@ -31,19 +32,20 @@ Map<String, dynamic> _$SubscriptionStoreProductToJson(
       'price': instance.price,
       'formattedPrice': instance.formattedPrice,
       'currencyCode': instance.currencyCode,
-      'store': _$CrosspayStoreEnumMap[instance.store]!,
+      'store': _$OrcaStoreEnumMap[instance.store]!,
       'subscriptionRecurrenceDays': instance.subscriptionRecurrenceDays,
       'accessLevel': instance.accessLevel,
       'productType': _$EntitlementTypeEnumMap[instance.productType]!,
+      'entitlementId': instance.entitlementId,
     };
 
-const _$CrosspayStoreEnumMap = {
-  CrosspayStore.appStore: 'appstore',
-  CrosspayStore.playStore: 'playstore',
-  CrosspayStore.stripe: 'stripe',
-  CrosspayStore.stripeSandbox: 'stripe_sandbox',
-  CrosspayStore.gocardless: 'gocardless',
-  CrosspayStore.gocardlessSandbox: 'gocardless_sandbox',
+const _$OrcaStoreEnumMap = {
+  OrcaStore.appStore: 'appstore',
+  OrcaStore.playStore: 'playstore',
+  OrcaStore.stripe: 'stripe',
+  OrcaStore.stripeSandbox: 'stripe_sandbox',
+  OrcaStore.gocardless: 'gocardless',
+  OrcaStore.gocardlessSandbox: 'gocardless_sandbox',
 };
 
 const _$EntitlementTypeEnumMap = {
@@ -52,49 +54,49 @@ const _$EntitlementTypeEnumMap = {
   EntitlementType.subscription: 'subscription',
 };
 
-_CrosspayEntitlement _$CrosspayEntitlementFromJson(Map<String, dynamic> json) =>
-    _CrosspayEntitlement(
+_OrcaEntitlement _$OrcaEntitlementFromJson(Map<String, dynamic> json) =>
+    _OrcaEntitlement(
       id: json['id'] as String,
       name: json['name'] as String,
       period: _durationFromMillis(json['period_ms']),
       description: json['description'] as String?,
-      metadata: json['metadata'] as Map<String, dynamic>?,
+      metadata: _fromJsonMetadata(json['metadata']),
       products:
-          CrosspayProducts.fromJson(json['products'] as Map<String, dynamic>),
+          OrcaProducts.fromJson(json['products'] as Map<String, dynamic>),
       entitlementType:
           $enumDecode(_$EntitlementTypeEnumMap, json['entitlement_type']),
     );
 
-Map<String, dynamic> _$CrosspayEntitlementToJson(
-        _CrosspayEntitlement instance) =>
+Map<String, dynamic> _$OrcaEntitlementToJson(
+        _OrcaEntitlement instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'period_ms': _durationToMillis(instance.period),
       'description': instance.description,
-      'metadata': instance.metadata,
+      'metadata': _toJsonMetadata(instance.metadata),
       'products': instance.products,
       'entitlement_type': _$EntitlementTypeEnumMap[instance.entitlementType]!,
     };
 
-_CrosspayProducts _$CrosspayProductsFromJson(Map<String, dynamic> json) =>
-    _CrosspayProducts(
+_OrcaProducts _$OrcaProductsFromJson(Map<String, dynamic> json) =>
+    _OrcaProducts(
       playStore: json['playstore'] == null
           ? null
-          : CrosspayProduct.fromJson(json['playstore'] as Map<String, dynamic>),
+          : OrcaProduct.fromJson(json['playstore'] as Map<String, dynamic>),
       appStore: json['appstore'] == null
           ? null
-          : CrosspayProduct.fromJson(json['appstore'] as Map<String, dynamic>),
+          : OrcaProduct.fromJson(json['appstore'] as Map<String, dynamic>),
       stripe: json['stripe'] == null
           ? null
-          : CrosspayProduct.fromJson(json['stripe'] as Map<String, dynamic>),
+          : OrcaProduct.fromJson(json['stripe'] as Map<String, dynamic>),
       gocardless: json['gocardless'] == null
           ? null
-          : CrosspayProduct.fromJson(
+          : OrcaProduct.fromJson(
               json['gocardless'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$CrosspayProductsToJson(_CrosspayProducts instance) =>
+Map<String, dynamic> _$OrcaProductsToJson(_OrcaProducts instance) =>
     <String, dynamic>{
       'playstore': instance.playStore,
       'appstore': instance.appStore,
@@ -102,34 +104,59 @@ Map<String, dynamic> _$CrosspayProductsToJson(_CrosspayProducts instance) =>
       'gocardless': instance.gocardless,
     };
 
-_CrosspayProduct _$CrosspayProductFromJson(Map<String, dynamic> json) =>
-    _CrosspayProduct(
+_OrcaProduct _$OrcaProductFromJson(Map<String, dynamic> json) =>
+    _OrcaProduct(
       id: json['id'] as String,
       productId: json['product_id'] as String,
       name: json['name'] as String,
       description: json['description'] as String?,
-      metadata: json['metadata'] as Map<String, dynamic>?,
+      metadata: _fromJsonMetadata(json['metadata']),
     );
 
-Map<String, dynamic> _$CrosspayProductToJson(_CrosspayProduct instance) =>
+Map<String, dynamic> _$OrcaProductToJson(_OrcaProduct instance) =>
     <String, dynamic>{
       'id': instance.id,
       'product_id': instance.productId,
       'name': instance.name,
       'description': instance.description,
-      'metadata': instance.metadata,
+      'metadata': _toJsonMetadata(instance.metadata),
     };
 
-_CrosspayStorableEntitlement _$CrosspayStorableEntitlementFromJson(
+_OrcaPlayStorePurchasesSyncProduct
+    _$OrcaPlayStorePurchasesSyncProductFromJson(
+            Map<String, dynamic> json) =>
+        _OrcaPlayStorePurchasesSyncProduct(
+          id: json['id'] as String,
+          productId: json['product_id'] as String,
+          entitlementId: json['entitlement_id'] as String,
+          name: json['name'] as String,
+          description: json['description'] as String?,
+          metadata: _fromJsonMetadata(json['metadata']),
+          receipt: json['receipt'] as String,
+        );
+
+Map<String, dynamic> _$OrcaPlayStorePurchasesSyncProductToJson(
+        _OrcaPlayStorePurchasesSyncProduct instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'product_id': instance.productId,
+      'entitlement_id': instance.entitlementId,
+      'name': instance.name,
+      'description': instance.description,
+      'metadata': _toJsonMetadata(instance.metadata),
+      'receipt': instance.receipt,
+    };
+
+_OrcaStorableEntitlement _$OrcaStorableEntitlementFromJson(
         Map<String, dynamic> json) =>
-    _CrosspayStorableEntitlement(
+    _OrcaStorableEntitlement(
       id: json['id'] as String,
       productId: json['product_id'] as String,
       entitlementId: json['entitlement_id'] as String,
       expiresAt: _dateTimeFromEpoch((json['expires_at'] as num).toInt()),
       trialExpiresAt: _dateTimeNullableFromEpoch(
           (json['trial_expires_at'] as num?)?.toInt()),
-      store: $enumDecode(_$CrosspayStoreEnumMap, json['store']),
+      store: $enumDecode(_$OrcaStoreEnumMap, json['store']),
       status: $enumDecode(_$EntitlementStatusEnumMap, json['status']),
       renewalStatus: $enumDecodeNullable(
           _$SubscriptionRenewalStatusEnumMap, json['renewal_status']),
@@ -138,15 +165,15 @@ _CrosspayStorableEntitlement _$CrosspayStorableEntitlementFromJson(
       purchaseState: json['purchase_state'] as String?,
     );
 
-Map<String, dynamic> _$CrosspayStorableEntitlementToJson(
-        _CrosspayStorableEntitlement instance) =>
+Map<String, dynamic> _$OrcaStorableEntitlementToJson(
+        _OrcaStorableEntitlement instance) =>
     <String, dynamic>{
       'id': instance.id,
       'product_id': instance.productId,
       'entitlement_id': instance.entitlementId,
       'expires_at': _dateTimeToEpoch(instance.expiresAt),
       'trial_expires_at': _dateTimeNullableToEpoch(instance.trialExpiresAt),
-      'store': _$CrosspayStoreEnumMap[instance.store]!,
+      'store': _$OrcaStoreEnumMap[instance.store]!,
       'status': _$EntitlementStatusEnumMap[instance.status]!,
       'renewal_status':
           _$SubscriptionRenewalStatusEnumMap[instance.renewalStatus],

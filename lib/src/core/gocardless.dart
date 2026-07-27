@@ -56,9 +56,10 @@ class GocardlessSubscriptionStore extends Store {
         description: storeProduct.description ?? "",
         formattedPrice: storeProduct.formattedPrice,
         price: storeProduct.price / 100,
-        store: CrosspayStore.gocardless,
+        store: OrcaStore.gocardless,
         subscriptionRecurrenceDays: entitlement.period?.inDays,
         productType: entitlement.entitlementType,
+        entitlementId: entitlement.id,
       );
     }).toList();
 
@@ -67,9 +68,9 @@ class GocardlessSubscriptionStore extends Store {
 
   @override
   Future<void> purchase(
-    CrosspayEntitlement entitlement,
+    OrcaEntitlement entitlement,
     String customerEmail, {
-    CrosspayProduct? proratedProduct,
+    OrcaProduct? proratedProduct,
     ProrationMode? prorationMode,
     required String redirectUrl,
     required String failureRedirectUrl,
@@ -84,7 +85,7 @@ class GocardlessSubscriptionStore extends Store {
           true,
           EntitlementType.subscription || EntitlementType.nonConsumable
         )) {
-      throw CrosspayException.alreadyActive(
+      throw OrcaException.alreadyActive(
         "User is already ${entitlement.entitlementType == EntitlementType.subscription ? 'subscribed to' : 'purchased'} this entitlement '${entitlement.name}'. "
         "User can not be allowed to purchase the entitlement product again",
       );
