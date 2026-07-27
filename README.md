@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Cross-platform in-app purchase plugin for Flutter. Supports Android, iOS, macOS,
-Web, Windows, and Linux by [Maxint Inc](https://github.com/maxint-app).
+Web, Windows, and Linux by [Maxint Inc](https://maxint.com).
 
 ## Features
 
