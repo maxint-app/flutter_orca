@@ -11,7 +11,7 @@ dependencies:
   envied: ^1.3.2
   flutter:
     sdk: flutter
-  flutter_orca:
+  orca:
     path: ../
 
 dev_dependencies:

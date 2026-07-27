@@ -5,8 +5,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_client_sse/constants/sse_request_type_enum.dart';
 import 'package:flutter_client_sse/flutter_client_sse.dart';
-import 'package:flutter_orca/src/core/core.dart';
-import 'package:flutter_orca/src/core/gocardless.dart';
+import 'package:orca/src/core/core.dart';
+import 'package:orca/src/core/gocardless.dart';
 import './core/iap.dart';
 import './core/stripe.dart';
 import './models/models.dart';
@@ -45,7 +45,7 @@ enum OrcaEnvironment {
   const OrcaEnvironment(this.label);
 }
 
-class FlutterOrca {
+class Orca {
   String? _customerEmail;
   String? _customerId;
   final StreamController<PurchaseEvent> _streamController;
@@ -57,13 +57,13 @@ class FlutterOrca {
 
   final String publicKey;
 
-  /// Create a new instance of FlutterOrca.
+  /// Create a new instance of Orca.
   ///
   /// [customerEmail] is the user id to use for purchases.
   /// This is to identify the user in the server and grant access accordingly.
   /// You can call [identify] and [logout] to set and unset the user id later.
   /// But this must be set (if not set) before calling [purchase].
-  FlutterOrca({
+  Orca({
     required this.publicKey,
     required OrcaEnvironment environment,
     String baseUrl = "https://api.orca.maxint.com/tenant",

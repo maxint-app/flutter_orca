@@ -238,13 +238,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.0"
-  flutter_orca:
-    dependency: "direct main"
-    description:
-      path: ".."
-      relative: true
-    source: path
-    version: "0.1.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -423,6 +416,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
+  orca:
+    dependency: "direct main"
+    description:
+      path: ".."
+      relative: true
+    source: path
+    version: "0.1.0"
   package_config:
     dependency: transitive
     description:

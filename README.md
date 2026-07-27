@@ -36,7 +36,7 @@ Web, Windows, and Linux by [Maxint Inc](https://maxint.com).
 Run following in your terminal to add the package to your Flutter project:
 
 ```sh
-$ flutter pub add flutter_orca
+$ flutter pub add orca
 ```
 
 ## Setup 
@@ -47,12 +47,12 @@ Follow our docs to setup your Orca account and configure your products and entit
 
 ### Initialize
 
-Create a `FlutterOrca` instance with your Orca API key and environment:
+Create a `Orca` instance with your Orca API key and environment:
 
 ```dart
-import 'package:flutter_orca/flutter_orca.dart';
+import 'package:orca/orca.dart';
 
-final orca = FlutterOrca(
+final orca = Orca(
   publicKey: 'YOUR_ORCA_PUBLIC_KEY',
   environment: OrcaEnvironment.sandbox, // or .production
 );

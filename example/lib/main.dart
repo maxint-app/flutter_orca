@@ -5,13 +5,13 @@ import 'package:collection/collection.dart';
 import 'package:example/env.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_orca/flutter_orca.dart';
+import 'package:orca/orca.dart';
 
-late final FlutterOrca orca;
+late final Orca orca;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  orca = FlutterOrca(
+  orca = Orca(
     publicKey: Env.orcaPublicKey,
     environment: !kIsWeb && Platform.isAndroid
         ? OrcaEnvironment.production

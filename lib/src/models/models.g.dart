@@ -61,14 +61,12 @@ _OrcaEntitlement _$OrcaEntitlementFromJson(Map<String, dynamic> json) =>
       period: _durationFromMillis(json['period_ms']),
       description: json['description'] as String?,
       metadata: _fromJsonMetadata(json['metadata']),
-      products:
-          OrcaProducts.fromJson(json['products'] as Map<String, dynamic>),
+      products: OrcaProducts.fromJson(json['products'] as Map<String, dynamic>),
       entitlementType:
           $enumDecode(_$EntitlementTypeEnumMap, json['entitlement_type']),
     );
 
-Map<String, dynamic> _$OrcaEntitlementToJson(
-        _OrcaEntitlement instance) =>
+Map<String, dynamic> _$OrcaEntitlementToJson(_OrcaEntitlement instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -92,8 +90,7 @@ _OrcaProducts _$OrcaProductsFromJson(Map<String, dynamic> json) =>
           : OrcaProduct.fromJson(json['stripe'] as Map<String, dynamic>),
       gocardless: json['gocardless'] == null
           ? null
-          : OrcaProduct.fromJson(
-              json['gocardless'] as Map<String, dynamic>),
+          : OrcaProduct.fromJson(json['gocardless'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$OrcaProductsToJson(_OrcaProducts instance) =>
@@ -104,8 +101,7 @@ Map<String, dynamic> _$OrcaProductsToJson(_OrcaProducts instance) =>
       'gocardless': instance.gocardless,
     };
 
-_OrcaProduct _$OrcaProductFromJson(Map<String, dynamic> json) =>
-    _OrcaProduct(
+_OrcaProduct _$OrcaProductFromJson(Map<String, dynamic> json) => _OrcaProduct(
       id: json['id'] as String,
       productId: json['product_id'] as String,
       name: json['name'] as String,
@@ -122,18 +118,17 @@ Map<String, dynamic> _$OrcaProductToJson(_OrcaProduct instance) =>
       'metadata': _toJsonMetadata(instance.metadata),
     };
 
-_OrcaPlayStorePurchasesSyncProduct
-    _$OrcaPlayStorePurchasesSyncProductFromJson(
-            Map<String, dynamic> json) =>
-        _OrcaPlayStorePurchasesSyncProduct(
-          id: json['id'] as String,
-          productId: json['product_id'] as String,
-          entitlementId: json['entitlement_id'] as String,
-          name: json['name'] as String,
-          description: json['description'] as String?,
-          metadata: _fromJsonMetadata(json['metadata']),
-          receipt: json['receipt'] as String,
-        );
+_OrcaPlayStorePurchasesSyncProduct _$OrcaPlayStorePurchasesSyncProductFromJson(
+        Map<String, dynamic> json) =>
+    _OrcaPlayStorePurchasesSyncProduct(
+      id: json['id'] as String,
+      productId: json['product_id'] as String,
+      entitlementId: json['entitlement_id'] as String,
+      name: json['name'] as String,
+      description: json['description'] as String?,
+      metadata: _fromJsonMetadata(json['metadata']),
+      receipt: json['receipt'] as String,
+    );
 
 Map<String, dynamic> _$OrcaPlayStorePurchasesSyncProductToJson(
         _OrcaPlayStorePurchasesSyncProduct instance) =>

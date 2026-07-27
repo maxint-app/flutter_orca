@@ -996,8 +996,7 @@ class _OrcaEntitlement implements OrcaEntitlement {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   _$OrcaEntitlementCopyWith<_OrcaEntitlement> get copyWith =>
-      __$OrcaEntitlementCopyWithImpl<_OrcaEntitlement>(
-          this, _$identity);
+      __$OrcaEntitlementCopyWithImpl<_OrcaEntitlement>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -1044,8 +1043,8 @@ class _OrcaEntitlement implements OrcaEntitlement {
 /// @nodoc
 abstract mixin class _$OrcaEntitlementCopyWith<$Res>
     implements $OrcaEntitlementCopyWith<$Res> {
-  factory _$OrcaEntitlementCopyWith(_OrcaEntitlement value,
-          $Res Function(_OrcaEntitlement) _then) =
+  factory _$OrcaEntitlementCopyWith(
+          _OrcaEntitlement value, $Res Function(_OrcaEntitlement) _then) =
       __$OrcaEntitlementCopyWithImpl;
   @override
   @useResult
@@ -1195,8 +1194,7 @@ abstract mixin class $OrcaProductsCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$OrcaProductsCopyWithImpl<$Res>
-    implements $OrcaProductsCopyWith<$Res> {
+class _$OrcaProductsCopyWithImpl<$Res> implements $OrcaProductsCopyWith<$Res> {
   _$OrcaProductsCopyWithImpl(this._self, this._then);
 
   final OrcaProducts _self;
@@ -1657,8 +1655,7 @@ mixin _$OrcaProduct {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
   $OrcaProductCopyWith<OrcaProduct> get copyWith =>
-      _$OrcaProductCopyWithImpl<OrcaProduct>(
-          this as OrcaProduct, _$identity);
+      _$OrcaProductCopyWithImpl<OrcaProduct>(this as OrcaProduct, _$identity);
 
   /// Serializes this OrcaProduct to a JSON map.
   Map<String, dynamic> toJson();
@@ -1704,8 +1701,7 @@ abstract mixin class $OrcaProductCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$OrcaProductCopyWithImpl<$Res>
-    implements $OrcaProductCopyWith<$Res> {
+class _$OrcaProductCopyWithImpl<$Res> implements $OrcaProductCopyWith<$Res> {
   _$OrcaProductCopyWithImpl(this._self, this._then);
 
   final OrcaProduct _self;
@@ -2016,8 +2012,7 @@ abstract mixin class _$OrcaProductCopyWith<$Res>
 }
 
 /// @nodoc
-class __$OrcaProductCopyWithImpl<$Res>
-    implements _$OrcaProductCopyWith<$Res> {
+class __$OrcaProductCopyWithImpl<$Res> implements _$OrcaProductCopyWith<$Res> {
   __$OrcaProductCopyWithImpl(this._self, this._then);
 
   final _OrcaProduct _self;
@@ -2076,8 +2071,7 @@ mixin _$OrcaPlayStorePurchasesSyncProduct {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $OrcaPlayStorePurchasesSyncProductCopyWith<
-          OrcaPlayStorePurchasesSyncProduct>
+  $OrcaPlayStorePurchasesSyncProductCopyWith<OrcaPlayStorePurchasesSyncProduct>
       get copyWith => _$OrcaPlayStorePurchasesSyncProductCopyWithImpl<
               OrcaPlayStorePurchasesSyncProduct>(
           this as OrcaPlayStorePurchasesSyncProduct, _$identity);
@@ -2576,9 +2570,8 @@ mixin _$OrcaStorableEntitlement {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $OrcaStorableEntitlementCopyWith<OrcaStorableEntitlement>
-      get copyWith => _$OrcaStorableEntitlementCopyWithImpl<
-              OrcaStorableEntitlement>(
+  $OrcaStorableEntitlementCopyWith<OrcaStorableEntitlement> get copyWith =>
+      _$OrcaStorableEntitlementCopyWithImpl<OrcaStorableEntitlement>(
           this as OrcaStorableEntitlement, _$identity);
 
   /// Serializes this OrcaStorableEntitlement to a JSON map.
@@ -2631,8 +2624,7 @@ mixin _$OrcaStorableEntitlement {
 
 /// @nodoc
 abstract mixin class $OrcaStorableEntitlementCopyWith<$Res> {
-  factory $OrcaStorableEntitlementCopyWith(
-          OrcaStorableEntitlement value,
+  factory $OrcaStorableEntitlementCopyWith(OrcaStorableEntitlement value,
           $Res Function(OrcaStorableEntitlement) _then) =
       _$OrcaStorableEntitlementCopyWithImpl;
   @useResult
@@ -3033,9 +3025,9 @@ class _OrcaStorableEntitlement implements OrcaStorableEntitlement {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$OrcaStorableEntitlementCopyWith<_OrcaStorableEntitlement>
-      get copyWith => __$OrcaStorableEntitlementCopyWithImpl<
-          _OrcaStorableEntitlement>(this, _$identity);
+  _$OrcaStorableEntitlementCopyWith<_OrcaStorableEntitlement> get copyWith =>
+      __$OrcaStorableEntitlementCopyWithImpl<_OrcaStorableEntitlement>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -3092,8 +3084,7 @@ class _OrcaStorableEntitlement implements OrcaStorableEntitlement {
 /// @nodoc
 abstract mixin class _$OrcaStorableEntitlementCopyWith<$Res>
     implements $OrcaStorableEntitlementCopyWith<$Res> {
-  factory _$OrcaStorableEntitlementCopyWith(
-          _OrcaStorableEntitlement value,
+  factory _$OrcaStorableEntitlementCopyWith(_OrcaStorableEntitlement value,
           $Res Function(_OrcaStorableEntitlement) _then) =
       __$OrcaStorableEntitlementCopyWithImpl;
   @override
