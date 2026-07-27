@@ -1,17 +1,17 @@
-# flutter_crosspay
+# flutter_orca
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Cross-platform in-app purchase plugin for Flutter. Supports Android, iOS, macOS,
-Web, Windows, and Linux by [Maxint Inc](https://github.com/maxint-app).
+Web, Windows, and Linux by [Maxint Inc](https://maxint.com).
 
 ## Features
 
 - **Unified API** - one interface for all platforms, regardless of the
   underlying store
-- **Entitlement-based model** - define products once on the Crosspay backend,
+- **Entitlement-based model** - define products once on the Orca backend,
   map them to App Store, Google Play, Stripe, and GoCardless or Create from the
-  Crosspay dashboard across all platforms
+  Orca dashboard across all platforms
 - **Consumables, non-consumables, and subscriptions** - full support for all
   product types
 - **Upgrade/downgrade (proration)** - change subscriptions with prorated billing
@@ -36,44 +36,44 @@ Web, Windows, and Linux by [Maxint Inc](https://github.com/maxint-app).
 Run following in your terminal to add the package to your Flutter project:
 
 ```sh
-$ flutter pub add flutter_crosspay
+$ flutter pub add flutter_orca
 ```
 
 ## Setup 
 
-Follow our docs to setup your Crosspay account and configure your products and entitlements: https://crosspay.dev/docs/
+Follow our docs to setup your Orca account and configure your products and entitlements: https://orca.maxint.com/docs/
 
 ## Usage
 
 ### Initialize
 
-Create a `FlutterCrosspay` instance with your Crosspay API key and environment:
+Create a `FlutterOrca` instance with your Orca API key and environment:
 
 ```dart
-import 'package:flutter_crosspay/flutter_crosspay.dart';
+import 'package:flutter_orca/flutter_orca.dart';
 
-final crosspay = FlutterCrosspay(
-  publicKey: 'YOUR_CROSSPAY_PUBLIC_KEY',
-  environment: CrosspayEnvironment.sandbox, // or .production
+final orca = FlutterOrca(
+  publicKey: 'YOUR_ORCA_PUBLIC_KEY',
+  environment: OrcaEnvironment.sandbox, // or .production
 );
 
 // Identify the customer (required before making purchases)
-await crosspay.identify('user@example.com');
+await orca.identify('user@example.com');
 ```
 
 ### List available entitlements
 
-Fetch all products/entitlements configured in your Crosspay dashboard:
+Fetch all products/entitlements configured in your Orca dashboard:
 
 ```dart
-final entitlements = await crosspay.listEntitlements();
+final entitlements = await orca.listEntitlements();
 
 for (final entitlement in entitlements) {
   print('${entitlement.name} - ${entitlement.entitlementType.name}');
 }
 ```
 
-Each `CrosspayEntitlement` contains store-specific product references
+Each `OrcaEntitlement` contains store-specific product references
 (`.products.playStore`, `.products.appStore`, `.products.stripe`,
 `.products.gocardless`).
 
@@ -84,10 +84,10 @@ external store:
 
 ```dart
 // On web/desktop, specify the store:
-final products = await crosspay.queryProducts(ExternalStore.stripe);
+final products = await orca.queryProducts(ExternalStore.stripe);
 
 // On mobile/macOS, the externalStore is ignored (IAP is used):
-final iapProducts = await crosspay.queryProducts(ExternalStore.stripe);
+final iapProducts = await orca.queryProducts(ExternalStore.stripe);
 
 for (final product in products) {
   print('${product.name}: ${product.formattedPrice}');
@@ -97,7 +97,7 @@ for (final product in products) {
 ### Make a purchase
 
 ```dart
-await crosspay.purchase(
+await orca.purchase(
   entitlement,
   externalStore: ExternalStore.stripe,    // stripe or gocardless for web/desktop
   redirectUrl: 'https://yourapp.com/success',
@@ -110,12 +110,12 @@ is used automatically.
 
 ### Upgrade / downgrade a subscription
 
-PlayStore and App Store support this automatically. But for Stripe/GoCardless, we need the hierarchy of products to be defined in the Crosspay dashboard. So make sure to create [Offerings](https://app.crosspay.dev/offerings) in the Crosspay dashboard for the entitlements you want to allow upgrades/downgrades for.
+PlayStore and App Store support this automatically. But for Stripe/GoCardless, we need the hierarchy of products to be defined in the Orca dashboard. So make sure to create [Offerings](https://app.orca.maxint.com/offerings) in the Orca dashboard for the entitlements you want to allow upgrades/downgrades for.
 
 Otherwise, it needs to be done manually like below. Pass the current product and proration mode when changing subscriptions:
 
 ```dart
-await crosspay.purchase(
+await orca.purchase(
   newEntitlement,
   externalStore: ExternalStore.stripe,
   redirectUrl: 'https://yourapp.com/success',
@@ -128,7 +128,7 @@ await crosspay.purchase(
 ### Listen to purchase events
 
 ```dart
-crosspay.purchaseEvents.listen((event) {
+orca.purchaseEvents.listen((event) {
   switch (event.event) {
     case PurchaseEventType.success:
       print('Purchase completed!');
@@ -147,7 +147,7 @@ crosspay.purchaseEvents.listen((event) {
 Check what the user currently owns:
 
 ```dart
-final activeEntitlements = await crosspay.getActiveEntitlements();
+final activeEntitlements = await orca.getActiveEntitlements();
 
 for (final e in activeEntitlements) {
   print('${e.entitlementId} - status: ${e.status.name}, expires: ${e.expiresAt}');
@@ -158,22 +158,22 @@ for (final e in activeEntitlements) {
 
 ```dart
 // Android: open Google Play subscription management
-launchUrl(Uri.parse(crosspay.playStoreManagementUrl));
+launchUrl(Uri.parse(orca.playStoreManagementUrl));
 
 // iOS / macOS: open App Store subscription management
-launchUrl(Uri.parse(crosspay.appStoreManagementUrl));
+launchUrl(Uri.parse(orca.appStoreManagementUrl));
 ```
 
 ### Clean up
 
 ```dart
-crosspay.logout();  // Clears customer identity, stops SSE stream
+orca.logout();  // Clears customer identity, stops SSE stream
 ```
 
 ## Configuration
 
-The Crosspay backend must be configured with your products and store mappings.
-See the [Crosspay documentation](https://crosspay.dev/docs) for details on setting up
+The Orca backend must be configured with your products and store mappings.
+See the [Orca documentation](https://orca.maxint.com/docs) for details on setting up
 entitlements, products, and store integrations.
 
 ## License

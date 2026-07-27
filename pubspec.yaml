@@ -1,14 +1,14 @@
-name: flutter_crosspay
+name: flutter_orca
 description: Cross platform in app purchase plugin. Supports all flutter platforms. Desktop and web are supported through Stripe. Developed by Maxint Inc.
 version: 0.1.0
-homepage: https://crosspay.dev
-repository: https://github.com/maxint-app/flutter_crosspay
-documentation: https://crosspay.dev/docs
+homepage: https://orca.maxint.com
+repository: https://github.com/maxint-app/flutter_orca
+documentation: https://orca.maxint.com/docs
 topics: 
   - flutter
   - in-app-purchase
-  - crosspay
-issue_tracker: https://github.com/maxint-app/flutter_crosspay/issues
+  - orca
+issue_tracker: https://github.com/maxint-app/flutter_orca/issues
 
 environment:
   sdk: ^3.6.1

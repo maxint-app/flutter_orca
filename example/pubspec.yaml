@@ -11,7 +11,7 @@ dependencies:
   envied: ^1.3.2
   flutter:
     sdk: flutter
-  flutter_crosspay:
+  flutter_orca:
     path: ../
 
 dev_dependencies:
