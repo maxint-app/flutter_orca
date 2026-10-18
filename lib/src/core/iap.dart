@@ -201,20 +201,7 @@ class InAppPurchaseSubscriptionStore extends Store {
     String? selectedOfferToken;
     final platformProduct = platformProducts.firstWhere(
       (p) {
-        print(
-          "Platform product: ${p.id}\n"
-          "Name: ${p.title}\n"
-          "Description: ${p.description}\n"
-          "Price: ${p.price}\n"
-          "Currency code: ${p.currencyCode}\n"
-          "Entitlement product ID: ${entitlement.products.playStore?.productId ?? entitlement.products.appStore?.productId}\n"
-          "Entitlement store: ${kIsAndroid ? 'playStore' : 'appStore'}\n"
-          "Base plans: ${(p is GooglePlayProductDetails) ? p.productDetails.subscriptionOfferDetails?.map((offer) => offer.basePlanId).join(', ') : 'N/A'}\n"
-          "-----------------------------------\n",
-        );
-
-        final store =
-            kIsAndroid ? OrcaStore.playStore : OrcaStore.appStore;
+        final store = kIsAndroid ? OrcaStore.playStore : OrcaStore.appStore;
         final product = entitlement.products[store];
 
         /// Android product ids are productId:basePlanId for subscriptions

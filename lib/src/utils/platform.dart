@@ -1,13 +1,11 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 
 final kIsDesktop = kIsLinux || kIsWindows || kIsMacOS;
 
 final kIsMobile = kIsAndroid || kIsIOS;
 
-final kIsMacOS = kIsWeb ? false : Platform.isMacOS;
-final kIsLinux = kIsWeb ? false : Platform.isLinux;
-final kIsAndroid = kIsWeb ? false : Platform.isAndroid;
-final kIsIOS = kIsWeb ? false : Platform.isIOS;
-final kIsWindows = kIsWeb ? false : Platform.isWindows;
+final kIsMacOS = !kIsWeb && defaultTargetPlatform == TargetPlatform.macOS;
+final kIsLinux = !kIsWeb && defaultTargetPlatform == TargetPlatform.linux;
+final kIsAndroid = !kIsWeb && defaultTargetPlatform == TargetPlatform.android;
+final kIsIOS = !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
+final kIsWindows = !kIsWeb && defaultTargetPlatform == TargetPlatform.windows;
